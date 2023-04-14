@@ -23,10 +23,35 @@
   <body>
     <div class="app">
       <div class="sidebar">
-        <p>Home</p>
+        <p class="sidebar-text">Home</p>
         <div class="sidebar-wrapper">
-          <div class="top-links"></div>
-          <div class="bottom-links"></div>
+          <div class="top-links">
+            <div class="dropdown">
+              <i class="fa-solid fa-list-ul"></i>
+              <select class="navbar-buttons navbar-dropdown">
+                <option value="alle-projecten">
+                  <span class="sidebar-span">Alle projecten</span>
+                </option>
+              </select>
+            </div>
+            <a
+              class="navbar-buttons"
+              id="navbar-nieuw-link"
+              href="{% url 'project-toevoegen' %}"
+            >
+              <i class="fa-solid fa-plus"></i>
+              <span class="sidebar-span">Nieuw project</span>
+            </a>
+          </div>
+          <div class="bottom-links">
+            <div class="user-icon">
+              <div class="user-box">
+                <p class="botton-text">User</p>
+                <p class="botton-text logout">Log out</p>
+              </div>
+              <p class="user-logo">Logo</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="app-body">
