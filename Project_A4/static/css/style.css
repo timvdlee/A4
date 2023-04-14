@@ -142,3 +142,28 @@ body {
 .logout {
     font-style: italic;
 }
+
+.header {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    padding: 16px 24px;
+    color: var(--secondary-font-color);
+  }
+
+  .header-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: end;
+  }
+
+  .header-text {
+    font-size: var(--primary-font-size);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: var(--secondary-font-color);
+    width: 270px;
+
+}

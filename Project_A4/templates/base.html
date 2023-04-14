@@ -56,7 +56,14 @@
       </div>
       <div class="app-body">
         <div class="header">
-          <div class="header-left"></div>
+          <div class="header-left">
+            <form method="post" style="margin-bottom: 20px">
+              {% csrf_token %}
+              <p class="header-text" name="title">
+                {{title|default:"Homepage"|title}}
+              </p>
+            </form>
+          </div>
         </div>
         <div class="inner-app-body">
           {% block content %}{% endblock content %}
