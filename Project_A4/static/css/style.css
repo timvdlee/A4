@@ -16,6 +16,7 @@
     --primary-font-size: 1.5em;
     --secondary-font-size: 1em;
     --tertiary-font-size: 3em;
+    --navbar-button-font-size: 0.8em;
     --primary-panel-color: #fff;
     --primary-button-background: #FE2E2E;
     --secondary-button-background: #3366FF;
@@ -85,7 +86,7 @@ body {
 }
 .navbar-buttons {
     color: var(--primary-font-color);
-    font-size: var(--secondary-font-size);
+    font-size: var(--navbar-button-font-size);
     text-decoration: none;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -107,11 +108,15 @@ body {
     margin-right: 10px;
     margin-bottom: 10px;
     border-radius: 4px;
-    background-color: var(--primary-button-background)
+    background-color: var(--primary-button-background);
 }
 .navbar-dropdown {
     border: none;
     margin: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }
 .user-icon {
     display: flex;
