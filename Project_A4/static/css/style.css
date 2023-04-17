@@ -236,11 +236,49 @@ body {
 
 }
 
-.pa_black_box{
+.pa_black_box {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
     flex-direction: column;
+    align-items: center;
     width: 80%;
     height: 80%;
+    background-color: #242527;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.pa_text {
+    font-family: var(--secondary-font);
+    font-size: x-large;
+    color: var(--primary-font-color);
+    font-weight: bold;
+    text-decoration: underline var(--primary-button-background);
+}
+
+.pa_user_input {
+    cursor: pointer;
+    font-family: var(--secondary-font);
+    padding: 13px 20px;
+    height: 45px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 0.8em;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: black;
+    background-color: white;
+    border: none;
+
+}
+
+.pa_button {
+    color: var(--primary-font-color);
+    background-color: #CB2C31;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 30px;
+    padding: 10px 25px;
+    font: var(--secondary-font);
+    font-weight: bold;
+
 }
