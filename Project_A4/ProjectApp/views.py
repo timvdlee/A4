@@ -1,8 +1,7 @@
 from django.shortcuts import render
 
+
 # Create your views here.
-
-
 
 
 def home(request):
@@ -14,7 +13,5 @@ def project_pagina(request):
 
 
 def project_toevoegen(request):
-    return render(request, 'project-toevoegen.html')
-
-
-
+    return render(request, 'project-toevoegen.html',
+                  {'title': 'Project toevoegen'})
