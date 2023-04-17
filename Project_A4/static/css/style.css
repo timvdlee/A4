@@ -216,7 +216,7 @@ body {
 .project-lijst-wrapper {
     overflow-x: auto;
     width: 100%;
-    max-width: calc(3 * 300px + 3 * 50px);
+    max-width: calc(3 * 300px + 3 * 45px);
   }
   
   .project-lijst {
@@ -320,7 +320,8 @@ body {
   
   .feed-inner {
     display: flex;
-    width: 1050px;
+    width: 100%;
+    max-width: calc(3 * 300px + 3 * 45px);
     background-color: #fff;
     border-radius: 16px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -331,6 +332,13 @@ body {
   .feed-titel {
     margin-top: 20px;
     margin-left: 20px;
+    font-size: 2em;
   }
 
+  .lijst-element-feed {
+    font-size: var(--primary-font-size);
+    font-weight: 600;
+    margin-left: 50px;
+    font-size: var(--primary-font-size);
+  }
   
