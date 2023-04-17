@@ -46,6 +46,7 @@ body {
 .app {
     background-color: var(--primary-app-background);
     max-width: 1550px;
+    font-size: var(--secondary-font);
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -198,10 +199,18 @@ body {
     overflow: hidden;
 }
 
+.home {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
 .horizontal-align {
     display: flex;
     justify-content: center;
     width: 100%;
+    flex: 1;
   }
   
 .project-lijst-wrapper {
@@ -212,7 +221,6 @@ body {
   
   .project-lijst {
     display: flex;
-    margin-left: 16px;
     border-radius: 16px;
     flex-direction: row;
     gap: 50px;
@@ -245,7 +253,7 @@ body {
     color: rgba(0, 0, 0, 0.5);
   }
   
-  .project-titel {
+  .project-titel, .feed-titel {
     font-size: var(--primary-font-size);
     margin: 0;
     font-weight: 600;
@@ -302,3 +310,27 @@ body {
     padding-right: 16px;
     padding-bottom: 10px;
 }
+
+.feed {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .feed-inner {
+    display: flex;
+    width: 1050px;
+    background-color: #fff;
+    border-radius: 16px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    margin-bottom: 20px;
+    flex-direction: column;
+  }
+  
+  .feed-titel {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+
+  
