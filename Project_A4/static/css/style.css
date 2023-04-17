@@ -13,6 +13,8 @@
     --secondary-font: 'Poppins', sans-serif;
     --primary-font-color: #fff;
     --secondary-font-color: #000;
+    --tertiary-font-color: #FE2E2E;
+    --maak-project-font-color: #292EA9;
     --primary-font-size: 1.5em;
     --secondary-font-size: 1em;
     --tertiary-font-size: 3em;
@@ -180,4 +182,123 @@ body {
     color: var(--primary-font-size);
     width: 270px;
 
+}
+.app-body {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    flex-direction: column;
+    padding: 16px 24px 24px 0;
+}
+
+.inner-app-body {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
+}
+
+.horizontal-align {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+.project-lijst-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    max-width: calc(3 * 300px + 3 * 50px);
+  }
+  
+  .project-lijst {
+    display: flex;
+    margin-left: 16px;
+    border-radius: 16px;
+    flex-direction: row;
+    gap: 50px;
+    flex-wrap: nowrap;
+    min-width: max-content;
+  }
+  
+  .project-element {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+    background-color: var(--primary-panel-color);
+    border-radius: 16px;
+    font-family: var(--secondary-font);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding-left: 16px;
+  }
+
+  .project-number {
+    margin: 0;
+    text-align: right;
+    font-family: var(--primary-font);
+    padding-top: 15px;
+    padding-right: 15px;
+    font-style: italic;
+    font-weight: 600;
+    font-size: var(--secondary-font);
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .project-titel {
+    font-size: var(--primary-font-size);
+    margin: 0;
+    font-weight: 600;
+  }
+
+
+  .project-datum {
+    margin: 0;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--tertiary-font-color);
+    position: relative;
+  }
+  
+  .project-datum::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 90%;
+    height: 3px;
+    background: #3366FF;
+  }
+
+  .project-maken {
+    margin: 0;
+    color: var(--maak-project-font-color);
+    font-size: var(--primary-font-size);
+    font-weight: 600;
+  }
+  
+  .gebruikers {
+    margin: 0;
+    padding-top: 10px;
+    font-size: var(--secondary-font-size);
+    font-weight: 600;
+  }
+.lijst {
+    margin: 0;
+}
+.lijst-element {
+    margin: 0;
+}
+
+.wijzeging {
+    text-align: right;
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    padding-right: 16px;
+    padding-bottom: 10px;
 }
