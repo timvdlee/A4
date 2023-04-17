@@ -18,6 +18,7 @@
       type="text/css"
       href="{% static 'css/style.css' %}"
     />
+    <script src="{% static 'js/script.js' %}"></script>
     {% endblock extra_css %} {% endblock head %}
   </head>
   <body>
@@ -26,7 +27,7 @@
         <p class="sidebar-text">Home</p>
         <div class="sidebar-wrapper">
           <div class="top-links">
-            <div class="dropdown">
+            <div class="dropdown" id="dropdownDiv">
               <i class="fa-solid fa-list-ul"></i>
               <select class="navbar-buttons navbar-dropdown">
                 <option value="alle-projecten">
@@ -34,11 +35,7 @@
                 </option>
               </select>
             </div>
-            <a
-              class="navbar-buttons"
-              id="navbar-nieuw-link"
-              href="{% url 'project-toevoegen' %}"
-            >
+            <a class="navbar-buttons" href="{% url 'project-toevoegen' %}">
               <i class="fa-solid fa-plus"></i>
               <span class="sidebar-span">Nieuw project</span>
             </a>
@@ -49,7 +46,9 @@
                 <p class="botton-text">User</p>
                 <p class="botton-text logout">Log out</p>
               </div>
-              <p class="user-logo">Logo</p>
+              <div class="user-logo">
+                <i class="fa-brands fa-github-alt"></i>
+              </div>
             </div>
           </div>
         </div>

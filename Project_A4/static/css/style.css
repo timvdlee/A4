@@ -140,7 +140,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-right: 20px;
+    margin-right: 20px;
+    border: 2px solid #3366FF;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: var(--secondary-font-size);
+    color: var(--secondary-font-color);
+    background: var(--primary-app-background);
+
+
     
 }
 
@@ -168,7 +177,7 @@ body {
     margin-top: 30px;
     margin-bottom: 30px;
     font-weight: 700;
-    color: var(--secondary-font-color);
+    color: var(--primary-font-size);
     width: 270px;
 
 }
