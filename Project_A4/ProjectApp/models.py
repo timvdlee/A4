@@ -8,6 +8,8 @@ class Project(models.Model):
     Naam_project = models.CharField(max_length=100)
     Datum_aangemaakt = models.DateField()
     Admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    #Deadline = models.DateField()
+    #Leden = models.CharField()
 
     class Meta:
         db_table = 'Projecten'

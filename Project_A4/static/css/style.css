@@ -227,7 +227,7 @@ body {
 
 .pa_page_column {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: column;
     width: 80%;
@@ -241,7 +241,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: 80%;
-    height: 80%;
+    height: 90%;
     background-color: #242527;
     border-radius: 12px;
     padding: 5px;
