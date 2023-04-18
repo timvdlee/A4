@@ -216,7 +216,7 @@ body {
 .project-lijst-wrapper {
     overflow-x: auto;
     width: 100%;
-    max-width: calc(3 * 300px + 3 * 45px);
+    max-width: calc(3 * 250px + 3 * 45px);
   }
   
   .project-lijst {
@@ -231,8 +231,8 @@ body {
   .project-element {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     background-color: var(--primary-panel-color);
     border-radius: 16px;
     font-family: var(--secondary-font);
@@ -254,7 +254,7 @@ body {
   }
   
   .project-titel, .feed-titel {
-    font-size: var(--primary-font-size);
+    font-size: var(--secondary-font-size);
     margin: 0;
     font-weight: 600;
   }
@@ -264,6 +264,7 @@ body {
     margin: 0;
     font-weight: 600;
     font-style: italic;
+    font-size: 0.8em;
     color: var(--tertiary-font-color);
     position: relative;
   }
@@ -274,9 +275,10 @@ body {
     position: absolute;
     bottom: 5px;
     left: 0;
-    width: 90%;
+    width: 78%;
     height: 3px;
     background: #3366FF;
+    z-index: -1;
   }
 
   .project-maken {
@@ -289,7 +291,7 @@ body {
   .gebruikers {
     margin: 0;
     padding-top: 10px;
-    font-size: var(--secondary-font-size);
+    font-size: 0.8em;
     font-weight: 600;
   }
 .lijst {
@@ -297,6 +299,7 @@ body {
 }
 .lijst-element {
     margin: 0;
+    font-size: 0.7em;
 }
 
 .wijzeging {
@@ -309,6 +312,10 @@ body {
     color: rgba(0, 0, 0, 0.5);
     padding-right: 16px;
     padding-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;;
+
 }
 
 .feed {
@@ -321,7 +328,7 @@ body {
   .feed-inner {
     display: flex;
     width: 100%;
-    max-width: calc(3 * 300px + 3 * 45px);
+    max-width: calc(3 * 250px + 3 * 45px);
     background-color: #fff;
     border-radius: 16px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -333,12 +340,22 @@ body {
     margin-top: 20px;
     margin-left: 20px;
     font-size: 2em;
+    position: relative;
   }
-
+  .feed-titel::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 50%;
+    height: 10px;
+    background: #FF7F01;
+    z-index: -1;
+  }
   .lijst-element-feed {
-    font-size: var(--primary-font-size);
+    font-size: var(--secondary-font-size);
     font-weight: 600;
     margin-left: 50px;
-    font-size: var(--primary-font-size);
   }
   
