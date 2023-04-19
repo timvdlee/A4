@@ -18,7 +18,7 @@ def project_pagina(request):
         } for _ in range(10)
     ]
     
-    return render(request, 'project-pagina.html',{"todos":todos})
+    return render(request, 'project.html',{"todos":todos})
 
 
 def project_toevoegen(request):
