@@ -359,3 +359,24 @@ body {
     margin-left: 50px;
   }
   
+  .navigation-link {
+    display: block;
+    color: #9e9fa4;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    height: 50px; /* increase height */
+    line-height: 50px; /* increase line-height */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+    white-space: nowrap;
+    margin: auto;
+    margin-left: 1%;
+    font-size: 20px;
+  }
+  
+  .navigation-link i {
+    width: 24px;
+    height: 24px;
+  }
