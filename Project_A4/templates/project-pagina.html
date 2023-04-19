@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+
+
+
+{% block content %}
+<div class="projectContent">
+    
+    <div class='todoWrapper'>
+    
+        {% for todo in todos %}
+    
+        <div class="todo">
+            <div class="topTodo">
+                <div class="desc">
+                    <p class="todoTitle">Todo: {{todo.name}}</p>
+                    <p class="todoDeadline">Deadline: {{todo.deadline}}</p>
+                </div>
+                <div class="editBtnWrapper">
+                    <button class="todoEditBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-three-dots todoDots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </button>
+                    {% comment %} Edit button goes here {% endcomment %}
+                </div>
+            </div>
+            <div class="bottomTodo">
+                <form action="project-pagina" method="post">
+                    {% csrf_token %}
+                    <div class="createSubTodo">
+                        <input type="text" name="createTodo" class="addSubTodo" id="createTodo" value="" placeholder="To do">
+                        <button class="btn btn-primary addTodoBtn" type="submit">Add</button>
+                    </div>
+                </form>
+                {% for subTodo in todo.subtodos %}
+                <form action="project-pagina" method="post">
+                    {% csrf_token %}
+                    <div class="subTodo">
+                        <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
+                        <button class="btn btn-success addTodoBtn" type="submit">✓</button>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="pageBottom">
+    
+    
+    </div>
+</div>
+{% endblock content %}
+
+
+
+
+
+
+
