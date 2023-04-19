@@ -21,6 +21,6 @@ from ProjectApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='homepage'),
-    path('project-pagina', views.project_pagina, name='project-pagina'),
+    path('project', views.project_pagina, name='project'),
     path('project-toevoegen', views.project_toevoegen, name='project-toevoegen'),
 ]

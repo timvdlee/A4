@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="bottomTodo">
-                <form action="project-pagina" method="post">
+                <form action="project" method="post">
                     {% csrf_token %}
                     <div class="createSubTodo">
                         <input type="text" name="createTodo" class="addSubTodo" id="createTodo" value="" placeholder="To do">
@@ -38,7 +38,7 @@
                     </div>
                 </form>
                 {% for subTodo in todo.subtodos %}
-                <form action="project-pagina" method="post">
+                <form action="project" method="post">
                     {% csrf_token %}
                     <div class="subTodo">
                         <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
