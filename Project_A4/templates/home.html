@@ -1,1 +1,79 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div class="home">
+  <div class="horizontal-align">
+    <div class="project-lijst-wrapper">
+      <div class="project-lijst">
+        <div class="project-element">
+          <p class="project-number">#1</p>
+          <p class="project-titel">Project 1</p>
+          <p class="project-datum">Aangemaakte: datum</p>
+          <p class="gebruikers">Gebruikers:</p>
+          <ul class="lijst">
+            <li class="lijst-element">Jesse</li>
+            <li class="lijst-element">Ise</li>
+            <li class="lijst-element">Tim</li>
+            <li class="lijst-element">Salah</li>
+          </ul>
+          <p class="wijzeging">
+            Laatste wijziging op dinsdag om 11:10 door Tim
+          </p>
+        </div>
+        <div class="project-element">
+          <p class="project-number">#2</p>
+          <p class="project-titel">Project 2</p>
+          <p class="project-datum">Aangemaakte: datum</p>
+          <p class="gebruikers">Gebruikers:</p>
+          <ul class="lijst">
+            <li class="lijst-element">Jesse</li>
+            <li class="lijst-element">Ise</li>
+            <li class="lijst-element">Tim</li>
+            <li class="lijst-element">Salah</li>
+          </ul>
+          <p class="wijzeging">
+            Laatste wijziging op dinsdag om 11:10 door Tim
+          </p>
+        </div>
+        <div class="project-element">
+          <p class="project-number">#3</p>
+          <p class="project-titel">Project 3</p>
+          <p class="project-datum">Aangemaakte: datum</p>
+          <p class="gebruikers">Gebruikers:</p>
+          <ul class="lijst">
+            <li class="lijst-element">Jesse</li>
+            <li class="lijst-element">Ise</li>
+            <li class="lijst-element">Tim</li>
+            <li class="lijst-element">Salah</li>
+          </ul>
+          <p class="wijzeging">
+            Laatste wijziging op dinsdag om 11:10 door Tim
+          </p>
+        </div>
+        <div class="project-element">
+          <p class="project-number">#</p>
+          <p class="project-titel">Project XX</p>
+          <p class="project-maken">Maak project</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="feed">
+    <div class="feed-inner">
+      <p class="feed-titel">Recente activiteiten:</p>
+      <ul class="feed-lijst">
+        <li class="lijst-element-feed">
+          Todo Test gemaakt voor project 1 door Tim.
+        </li>
+        <li class="lijst-element-feed">
+          Deadline voor project 2 is uitgesteld door Salah.
+        </li>
+        <li class="lijst-element-feed">
+          Ise M heeft gebruiker Jesse M toegevoegd aan project 1.
+        </li>
+        <li class="lijst-element-feed">-</li>
+        <li class="lijst-element-feed">-</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

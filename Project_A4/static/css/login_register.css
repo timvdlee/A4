@@ -1,0 +1,93 @@
+body{
+    overflow: hidden;
+}
+
+.hcontainer{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+
+.form-container form {
+    background: #242527CC;
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 40px;
+}
+  
+.sign-in-container {
+    width: 350px;
+    height: 350px;
+    margin: auto;
+}
+  
+input[type="text"], 
+input[type="password"] {
+    width: 240px;
+    text-align: center;
+    border: none;
+    border-radius: 12px;
+    border-bottom: 1px solid #fff;
+    font-family: "PLay", sans-serif;
+    font-size: 16px;
+    font-weight: 200px;
+    padding: 10px 0;
+    transition: border 0.5s;
+    outline: none;
+    color: #000000;
+    font-weight: bold;
+}
+.buton {
+    border-radius: 12px;
+    border: 1px solid #FE2E2E;
+    background: #ff4b2b;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    transition: transform 80ms ease-in;
+    margin-top: 25px;
+}
+button:hover{
+    background: #cd6a59;
+}
+button:active {
+    transform: scale(0.95);
+  }
+  
+button:focus {
+outline: none;
+}
+
+button.ghost {
+background: transparent;
+border-color: #ff4b2b;
+background-color: #ff4b2b;
+}
+
+p, a {
+font-size: 16px;
+font-weight: bold;
+line-height: 20px;
+letter-spacing: 0.5px;
+margin: 20px 0 30px;
+color: white;
+}
+h1 {
+font-weight: bold;
+margin: 0;
+color: white;
+}
+
+
+.pp {
+    color: red;
+    margin-top: -22px;
+  }
