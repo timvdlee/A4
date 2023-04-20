@@ -13,6 +13,8 @@
     --secondary-font: 'Poppins', sans-serif;
     --primary-font-color: #fff;
     --secondary-font-color: #000;
+    --tertiary-font-color: #FE2E2E;
+    --maak-project-font-color: #292EA9;
     --primary-font-size: 1.5em;
     --secondary-font-size: 1em;
     --tertiary-font-size: 3em;
@@ -44,6 +46,7 @@ body {
 .app {
     background-color: var(--primary-app-background);
     max-width: 1550px;
+    font-size: var(--secondary-font);
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -184,7 +187,6 @@ body {
     width: 270px;
 
 }
-
 .app-body {
     display: flex;
     overflow: hidden;
@@ -192,15 +194,6 @@ body {
     flex-direction: column;
     padding: 16px 24px 24px 0;
 }
-
-
-.inner-app-body {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    overflow: hidden;
-}
-
 .pa_whitebox {
     display: flex;
     flex-direction: row;
@@ -282,3 +275,193 @@ body {
     font-weight: bold;
 
 }
+.inner-app-body {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+
+.home {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.horizontal-align {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+  }
+  
+.project-lijst-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    max-width: calc(3 * 250px + 3 * 45px);
+  }
+  
+  .project-lijst {
+    display: flex;
+    border-radius: 16px;
+    flex-direction: row;
+    gap: 50px;
+    flex-wrap: nowrap;
+    min-width: max-content;
+  }
+  
+  .project-element {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+    background-color: var(--primary-panel-color);
+    border-radius: 16px;
+    font-family: var(--secondary-font);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding-left: 16px;
+  }
+
+  .project-number {
+    margin: 0;
+    text-align: right;
+    font-family: var(--primary-font);
+    padding-top: 15px;
+    padding-right: 15px;
+    font-style: italic;
+    font-weight: 600;
+    font-size: var(--secondary-font);
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .project-titel, .feed-titel {
+    font-size: var(--secondary-font-size);
+    margin: 0;
+    font-weight: 600;
+  }
+
+
+  .project-datum {
+    margin: 0;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 0.8em;
+    color: var(--tertiary-font-color);
+    position: relative;
+  }
+  
+  .project-datum::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 78%;
+    height: 3px;
+    background: #3366FF;
+    z-index: -1;
+  }
+
+  .project-maken {
+    margin: 0;
+    color: var(--maak-project-font-color);
+    font-size: var(--primary-font-size);
+    font-weight: 600;
+  }
+  
+  .gebruikers {
+    margin: 0;
+    padding-top: 10px;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+.lijst {
+    margin: 0;
+}
+.lijst-element {
+    margin: 0;
+    font-size: 0.7em;
+}
+
+.wijzeging {
+    text-align: right;
+    font-family: 'Poppins';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    padding-right: 16px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;;
+
+}
+
+.feed {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .feed-inner {
+    display: flex;
+    width: 100%;
+    max-width: calc(3 * 250px + 3 * 45px);
+    background-color: #fff;
+    border-radius: 16px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    margin-bottom: 20px;
+    flex-direction: column;
+  }
+  
+  .feed-titel {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 2em;
+    position: relative;
+  }
+  .feed-titel::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 50%;
+    height: 10px;
+    background: #FF7F01;
+    z-index: -1;
+  }
+  .lijst-element-feed {
+    font-size: var(--secondary-font-size);
+    font-weight: 600;
+    margin-left: 50px;
+  }
+  
+  .navigation-link {
+    display: block;
+    color: #9e9fa4;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    height: 50px; /* increase height */
+    line-height: 50px; /* increase line-height */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+    white-space: nowrap;
+    margin: auto;
+    margin-left: 1%;
+    font-size: 20px;
+  }
+  
+  .navigation-link i {
+    width: 24px;
+    height: 24px;
+  }
