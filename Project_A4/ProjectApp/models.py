@@ -1,6 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+import datetime
+from django.contrib.auth.models import User
+
+ISO_date = datetime.datetime.now().strftime('%Y-%m-%d')
+ISO_deadline = datetime.date.fromisoformat('2024-01-01').strftime('%Y-%m-%d')
+
+default_date = datetime.date.fromisoformat(ISO_date)
+default_deadline = datetime.date.fromisoformat(ISO_deadline)
 
 
 # Create your models here.
@@ -8,10 +16,10 @@ from django.contrib.auth import get_user_model
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    creation_date = models.DateField()
-    deadline_date = models.DateField()
-    admin_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    members = models.ManyToManyField(get_user_model(),
+    creation_date = models.DateField(default=default_date)
+    deadline_date = models.DateField(default=default_deadline)
+    admin_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    members = models.ManyToManyField(User,
                                      related_name="project_members")
 
     class Meta:
