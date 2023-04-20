@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
+
 # Create your models here.
 
 class Project(models.Model):
@@ -10,11 +11,13 @@ class Project(models.Model):
     creation_date = models.DateField()
     deadline_date = models.DateField()
     admin_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    members = models.ManyToManyField(get_user_model())
+    members = models.ManyToManyField(get_user_model(),
+                                     related_name="project_members")
 
     class Meta:
         db_table = 'Project'
         verbose_name_plural = 'Projecten'
+
     def __str__(self) -> str:
         return f"Project {self.name} #{self.id}"
 
@@ -30,6 +33,7 @@ class Todo(models.Model):
     class Meta:
         db_table = 'Todo'
         verbose_name_plural = "Todos"
+
     def __str__(self) -> str:
         return f"Todo {self.id} part of {self.project} name {self.name}"
 
@@ -43,6 +47,7 @@ class SubTodo(models.Model):
     class Meta:
         db_table = 'SubTodo'
         verbose_name_plural = "SubTodo's"
+
     def __str__(self) -> str:
         return f"{self.description} #{self.id} completed {self.completed}"
 
@@ -58,6 +63,7 @@ class Recent(models.Model):
     class Meta:
         db_table = 'Recent_edit'
         verbose_name_plural = "Recent_edits"
+
     def __str__(self) -> str:
         return f"Recent id: {self.id} | {self.date} {self.time} desc {self.description}"
 
@@ -69,5 +75,6 @@ class ProfilePicture(models.Model):
     class Meta:
         db_table = 'ProfilePicture'
         verbose_name_plural = 'ProfilePictures'
+
     def __str__(self) -> str:
         return f"Profile picture for {self.user} img: {self.profilepic}"

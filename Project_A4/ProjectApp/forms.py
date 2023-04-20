@@ -7,4 +7,4 @@ class ProjectFrom(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ["Naam_project", "Admin", "Datum_aangemaakt"]
+        fields = ["name", "members", "deadline_date"]
