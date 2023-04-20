@@ -363,14 +363,18 @@ body {
   /* Todo's */
 
   .todoWrapper {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 300px is the minimum width for each column */;
     gap: 10px;
-    flex-wrap: wrap;
     overflow-y: scroll;
-    justify-content: center;
-    flex: 2;
-  }
+    justify-items: center;
+    align-items: center;
+    flex: 1.5;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+}
+
 
   .todo {
     display: flex;
@@ -468,13 +472,14 @@ body {
 
 .addTodoBtn{
   border-radius: 8px;
-  width: 75px;
+  width: 85px;
 }
 
 
 .projectContent{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .pageBottom {
