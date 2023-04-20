@@ -373,7 +373,7 @@ body {
     padding-bottom: 10px;
     padding-left: 10px;
     scroll-snap-type: y mandatory;
-    height: calc(2 * 15.5em + 10px * 2 );
+    height: calc(2 * ((3 * 1.5em + 4.5em) + 15px)); /* Adjust the calculation based on max 3 subtodos */
 
 }
 
@@ -383,7 +383,8 @@ body {
     flex-direction: column;
     background-color: var(--primary-panel-color);
     border-radius: 30px;
-    height: 15.5em ;
+    height: auto;
+    min-width: 15.5em;
     padding: 16px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     grid-template-columns:repeat(auto-fit,300px);
@@ -444,11 +445,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    overflow: scroll;
+    overflow-y: auto; 
+    max-height: calc(2 * 2.5em);
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+}
 
-  }
+.bottomTodo::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+
 
   .bottomTodo div {
     scroll-snap-align: start;
@@ -507,14 +515,17 @@ body {
   padding-left: 3em;
   padding-right: 3em;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
-  height: 5%;
+
+  /* height: 5%; */
 }
 
 .project_title_text {
   font-size: var(--primary-font-size);
   font-weight: 700;
   color: var(--primary-font-size);
+  margin: 0;
 
 }
 
@@ -542,7 +553,8 @@ body {
   text-decoration: none;
   background-color: var(--primary-button-background);
   border-radius: 5px;
-  width: 100px ;
+  width: 150px ;
+  height: 50px;
   border: none;
   font-size: var(--secondary-font-color);
   font-family: var(--secondary-font);
@@ -561,6 +573,7 @@ body {
   padding-top: 16px;
   padding-bottom: 0;
   height: 30%;
+  flex: 3;
 }
 
 .projectUsers {

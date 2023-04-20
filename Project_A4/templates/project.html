@@ -1,92 +1,78 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block extra_css %}
 {% endblock extra_css %}
 
-
-
-
 {% block content %}
-<div class="projectContent">
-    {% block app_header %}{% endblock app_header %}
-    <div class="projectHeader">
-        <div class="projectTitle">
-            <p type="text" class="project_title_text" name="title" value="project">Project</p>
-            <button class="nameEditBtn">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </button>
+    <div class="projectContent">
+        {% block app_header %}
+        {% endblock app_header %}
+        <div class="projectHeader">
+            <div class="projectTitle">
+                <p type="text" class="project_title_text" name="title" value="project">Project</p>
+                <button class="nameEditBtn">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+            </div>
+            <button class="addTodoButton">Add Todo</button>
         </div>
-        <button class="addTodoButton">Add Todo</button>
-    </div>
-    
-    <div class='todoWrapper'>
-    
-        {% for todo in todos %}
-    
-        <div class="todo">
-            <div class="topTodo">
-                <div class="desc">
-                    <p class="todoTitle" title='{{todo.name}}'>Todo: {{todo.name}}</p>
-                    <p class="todoDeadline">Deadline: {{todo.deadline}}</p>
+        <div class='todoWrapper'>
+            {% for todo in todos %}
+            <div class="todo">
+                <div class="topTodo">
+                    <div class="desc">
+                        <p class="todoTitle" title='{{todo.name}}'>Todo: {{todo.name}}</p>
+                        <p class="todoDeadline">Deadline: {{todo.deadline}}</p>
+                    </div>
+                    <div class="editBtnWrapper">
+                        <button class="todoEditBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="" fill="currentColor" class="bi bi-three-dots todoDots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                            </svg>
+                        </button>
+                        {% comment %} Edit button goes here {% endcomment %}
+                    </div>
                 </div>
-                <div class="editBtnWrapper">
-                    <button class="todoEditBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="" fill="currentColor" class="bi bi-three-dots todoDots" viewBox="0 0 16 16">
-                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                        </svg>
-                    </button>
-                    {% comment %} Edit button goes here {% endcomment %}
+                <div class="bottomTodo">
+                    <form action={% url 'project' %} method="post">
+                        {% csrf_token %}
+                        <div class="createSubTodo">
+                            <input type="text" name="createTodo" class="addSubTodo" id="createTodo" value="" placeholder="To do">
+                            <button class="btn btn-primary addTodoBtn" type="submit">Add</button>
+                        </div>
+                    </form>
+                    {% for subTodo in todo.subtodos %}
+                    <form action={% url 'project' %} method="post">
+                        {% csrf_token %}
+                        <div class="subTodo">
+                            <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
+                            <button class="btn btn-success addTodoBtn" type="submit">✓</button>
+                        </div>
+                    </form>
+                    {% endfor %}
                 </div>
             </div>
-            <div class="bottomTodo">
-                <form action={% url 'project' %} method="post">
-                    {% csrf_token %}
-                    <div class="createSubTodo">
-                        <input type="text" name="createTodo" class="addSubTodo" id="createTodo" value="" placeholder="To do">
-                        <button class="btn btn-primary addTodoBtn" type="submit">Add</button>
-                    </div>
-                </form>
-                {% for subTodo in todo.subtodos %}
-                <form action={% url 'project' %} method="post">
-                    {% csrf_token %}
-                    <div class="subTodo">
-                        <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
-                        <button class="btn btn-success addTodoBtn" type="submit">✓</button>
-                    </div>
-                </form>
-                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="pageBottom">
+            <div class="projectUsers">
+                <p class="finishedTodoText">Gebruikers</p>
             </div>
-        </div>
-        {% endfor %}
-    </div>
-    <div class="pageBottom">
-        <div class="projectUsers">
-            <p class="finishedTodoText">Gebruikers</p>
-
-
-        </div>
-        <div class="finishedTodoWrapper">
-            <p class="finishedTodoText">Finished Todos</p>
-            <div class="finishedTodo">
-                {% for f_todo in finished_todos %}
+            <div class="finishedTodoWrapper">
+                <p class="finishedTodoText">Finished Todos</p>
+                <div class="finishedTodo">
+                    {% for f_todo in finished_todos %}
                     <form class="finTodoForm" action={% url 'project' %} method="post">
                         {% csrf_token %}
                         <input type="hidden" name="id" value={{f_todo.id}}>
                         •    <button type="submit" class="fin_todoBtn">{{f_todo.name}}</button>
                     </form>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    
-    
     </div>
-</div>
+    
 {% endblock content %}
-
-
-
-
-
-
-
