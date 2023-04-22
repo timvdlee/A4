@@ -543,8 +543,12 @@ body {
   transform: translate(0,7.5%);
 }
 
-.nameEditBtn:focus.  {
+.nameEditBtn:focus {
   outline: none;
+}
+
+.nameEditBtn:hover {
+  color: var(--secondary-button-background)
 }
 
 .addTodoButton {
@@ -653,3 +657,8 @@ body {
   padding: 1em;
 }
 
+/* modals */
+
+.modalBtn {
+  background-color: var(--primary-button-background);
+}
