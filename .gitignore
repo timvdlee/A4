@@ -145,3 +145,4 @@ dmypy.json
 *.vsix
 
 .DS_Store
+Project_A4/ProjectApp/migrations
