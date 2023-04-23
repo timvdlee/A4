@@ -24,7 +24,7 @@ def project_pagina(request):
 
     todos = [
         {
-            "name": f"Todo {str(uuid.uuid4())}",
+            "name": f"{str(uuid.uuid4())}",
             "deadline": (deadline := random_deadline(start_date, end_date)).strftime("%d-%m-%Y %H:%M"),
             "deadline-date": deadline.strftime("%Y-%m-%d"),
             "deadline_time": deadline.strftime("%H:%M"),
@@ -68,7 +68,6 @@ def project_pagina(request):
 
     return render(request, 'project.html',
                   {
-                      "todos": todos,
                       "finished_todos": finished_todos,
                       "project_name_form": project_name_form,
                       "todo_form": todo_forms,
