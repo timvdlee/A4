@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .forms import ProjectForm
 from datetime import datetime
 from .models import Project
+from django.contrib.auth import get_user_model
+import json
 
 
 # Create your views here.
@@ -24,9 +26,18 @@ def project_toevoegen(request):
             obj = form.save(commit=False)
             obj.admin_user = request.user
             obj.save()
-            for x in (request.POST.getlist('members')):
+            usr_list = json.loads(request.POST.get('members'))
+            obj.members.add(request.user.id)
+            for x in usr_list:
                 obj.members.add(x)
             obj.save()
+    
+    selectable_users = {i["username"]: i["id"] for i in get_user_model().objects.filter(is_staff=False).exclude(id=request.user.id).values()}
+    selectable_users = json.dumps(selectable_users)
+    
+    
+    
     return render(request, 'project-toevoegen.html',
                   {'title': 'Project toevoegen',
-                   'project_form': project_toev_form})
+                   'project_form': project_toev_form,
+                   "selectable_users":selectable_users})

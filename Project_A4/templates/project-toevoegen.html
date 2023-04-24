@@ -2,6 +2,15 @@
 {% load widget_tweaks %}
 {% load static %}
 
+{% block head %}
+
+    <script type="text/javascript"> 
+        let users = {{selectable_users | safe}};
+    </script>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock head %}
+
 {% block content %}
 
 <div class="pa_page_row">
@@ -13,7 +22,7 @@
                         <br>
                         <div class="pa_text">Nieuw project aanmaken</div>
                         <br>
-                        <form method="post">
+                        <form method="post" autocomplete="off">
                             {% csrf_token %}
 
 
@@ -27,12 +36,23 @@
                                 <div>
                                                                         <br>
 
-                                    {% render_field project_form.members class="pa_user_input" placeholder="Leden" %}
-                                    <br>
+                                    {% comment %} {% render_field project_form.members class="pa_user_input" placeholder="Leden" %} {% endcomment %}
+                                    
+                                    <div class="autocomplete">
+                                        <input class="pa_user_input" id="userInput" type="text" name="users" placeholder="Gebruikers">
+                                        <button type="button" class="btn btn-danger" id="addUsrBtn" onclick="toevoegen()">Toevoegen</button>
+                                      </div>
+                                    <input type="hidden" name="members" id="hiddenUsers" value="[]">
+                                    <script type="text/javascript"> 
+                                        let users = {{selectable_users | safe}};
+                                     </script>
+                                    <p class="whiteText" id="userDisplay">
+                                        Gebruikers:
+                                    </p>
+
 
                                 </div>
                                 <div>
-                                    <br>
                                     {% render_field project_form.deadline_date class="pa_user_input" placeholder="Deadline" %}
                                     <br>
 
