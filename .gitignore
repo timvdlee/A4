@@ -145,6 +145,4 @@ dmypy.json
 *.vsix
 
 .DS_Store
-aantekeningen.txt
-Project_A4/accounts/migrations/__init__.py
-Project_A4/accounts/__init__.py
+Project_A4/ProjectApp/migrations
