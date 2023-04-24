@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .forms import ProjectNaam, TodoForm
 # Create your views here.
 
 
@@ -19,12 +19,22 @@ def project_pagina(request):
     ]
     
     finished_todos = [{"name":"Maken van een maken van een weet ik wel abcdefghijklmnopqrstuvwxyz","id":5} for _ in range(50)]
+    project_name = ProjectNaam()
+    todoform = TodoForm()
     
     project_users = [
         {"username":"Hoi","role":"Gebruiker","img":"none"}
         for _ in range(6)
     ]
-    return render(request, 'project.html',{"todos":todos,"finished_todos":finished_todos,"project_users":project_users})
+    return render(request, 'project.html',
+                  {
+                      "todos":todos,
+                      "finished_todos":finished_todos,
+                      "project_name": project_name,
+                      "todoform": todoform,
+                      "project_users": project_users
+                   }
+                  )
 
 
 def project_toevoegen(request):
