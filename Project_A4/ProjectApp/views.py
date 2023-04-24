@@ -19,7 +19,12 @@ def project_pagina(request):
     ]
     
     finished_todos = [{"name":"Maken van een maken van een weet ik wel abcdefghijklmnopqrstuvwxyz","id":5} for _ in range(50)]
-    return render(request, 'project.html',{"todos":todos,"finished_todos":finished_todos})
+    
+    project_users = [
+        {"username":"Hoi","role":"Gebruiker","img":"none"}
+        for _ in range(6)
+    ]
+    return render(request, 'project.html',{"todos":todos,"finished_todos":finished_todos,"project_users":project_users})
 
 
 def project_toevoegen(request):

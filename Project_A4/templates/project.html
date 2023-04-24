@@ -62,8 +62,22 @@
     </div>
     <div class="pageBottom">
         <div class="projectUsers">
-            <p class="finishedTodoText">Gebruikers</p>
-
+            <div class="userHeader">
+                <p class="finishedTodoText">Gebruikers</p>
+                <button class="addTodoButton">Add gebruiker</button>
+            </div>
+            <div class="users">
+                {% for user in project_users  %}
+                    <div class="user">
+                        <div class="user-logo">
+                            <i class="fa-brands fa-github-alt"></i>
+                        </div>
+                        <p class="usrDesc">Naam: {{user.username}}</p>
+                        <p class="usrDesc">Rol: {{user.role}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            
 
         </div>
         <div class="finishedTodoWrapper">

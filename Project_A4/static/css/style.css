@@ -636,7 +636,28 @@ body {
 
 /* Gebruikers  */
 
+.userHeader {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 20%;
+}
+
+.users {
+  height: 80%;
+  display: grid;
+  flex-direction: row;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3,1fr);
+  padding-left: 3em;
+  width: 100%;
+  max-width: 100%;
+}
+
 .projectUsers {
   padding: 1em;
+  display: flex;
+  flex-direction: column;
 }
 
