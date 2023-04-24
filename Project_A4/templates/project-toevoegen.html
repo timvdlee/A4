@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="pa_page_row">
+      <div class="pa_page_column">
+        <div class="pa_whitebox">
+          <div class="pa_page_row">
+            <div class="pa_page_column">
+              <div class="pa_black_box">
+                <br>
+                <div class="pa_text">Nieuw project aanmaken</div>
+                <br>
+                <div>
+                  <div>
+                    <p>Naam</p>
+                    {% render_field project_form.Naam_project class="pa_user_input" %}
+                  </div>
+                  <div>
+                    <p>Admin</p>
+                    {% render_field project_form.Admin class="pa_user_input" %}
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <p>Datum aangemaakt</p>
+                    {% render_field project_form.Datum_aangemaakt class="pa_user_input" %}
+                  </div>
+                  <input type="submit" class="pa_button" value="Maak project">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}
