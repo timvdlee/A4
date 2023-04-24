@@ -1,10 +1,12 @@
 from ProjectApp.models import Project, Todo
 from django import forms
+from django.contrib.auth import get_user_model
 
-class ProjectNaam(forms.ModelForm):
-    name = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(),
+
+class ProjectForm(forms.ModelForm):
+    name = forms.CharField(required=False)
+    deadline_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
         required=True
     )
 
