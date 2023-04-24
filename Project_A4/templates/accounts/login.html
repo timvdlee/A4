@@ -1,0 +1,24 @@
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static '/css/login_register.css' %}">
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+{% endblock %}
+
+{%if not request.user.is_authenticated %}
+    <div class="hcontainer">
+        <div class="form-container sign-in-container">
+            <form action="" method="POST">{% csrf_token %}
+                <h1 style="margin-bottom: 25px; margin-top: 10px;">LOGIN</h1>
+                {{login_form.username|attr:"placeholder:Gebruikersnaam"}}<br>
+                {{login_form.password|attr:"placeholder:Wachtwoord"}}
+                <button type="submit" name="login_form" class="buton">Login</button>
+                <p>Registreer <a href="/registreer/">hier!</a></p>
+            </form>
+        </div>
+    </div>
+{% endif %}
+{% endblock content %}
