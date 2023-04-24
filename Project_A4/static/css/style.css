@@ -187,6 +187,7 @@ body {
     width: 270px;
 
 }
+
 .app-body {
     display: flex;
     overflow: hidden;
@@ -194,6 +195,7 @@ body {
     flex-direction: column;
     padding: 16px 24px 24px 0;
 }
+
 .pa_whitebox {
     display: flex;
     flex-direction: row;
@@ -233,16 +235,38 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 80%;
     height: 90%;
     background-color: #242527;
     border-radius: 12px;
     padding: 5px;
+
 }
+
+.pa_inside_black_box{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #242527;
+    border-radius: 12px;
+    font-size: x-large;
+}
+
+.pa_button_inside_black_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #242527;
+    border-radius: 12px;
+    font-size: large;
+}
+
 
 .pa_text {
     font-family: var(--secondary-font);
-    font-size: x-large;
+    font-size: xx-large;
     color: var(--primary-font-color);
     font-weight: bold;
     text-decoration: underline var(--primary-button-background);
@@ -273,15 +297,15 @@ body {
     padding: 10px 25px;
     font: var(--secondary-font);
     font-weight: bold;
-
+    border: none;
 }
+
 .inner-app-body {
     display: flex;
     flex-direction: row;
     height: 100%;
     overflow: hidden;
 }
-
 
 
 .home {
@@ -296,24 +320,24 @@ body {
     justify-content: center;
     width: 100%;
     flex: 1;
-  }
-  
+}
+
 .project-lijst-wrapper {
     overflow-x: auto;
     width: 100%;
     max-width: calc(3 * 250px + 3 * 45px);
-  }
-  
-  .project-lijst {
+}
+
+.project-lijst {
     display: flex;
     border-radius: 16px;
     flex-direction: row;
     gap: 50px;
     flex-wrap: nowrap;
     min-width: max-content;
-  }
-  
-  .project-element {
+}
+
+.project-element {
     display: flex;
     flex-direction: column;
     width: 250px;
@@ -323,9 +347,9 @@ body {
     font-family: var(--secondary-font);
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     padding-left: 16px;
-  }
+}
 
-  .project-number {
+.project-number {
     margin: 0;
     text-align: right;
     font-family: var(--primary-font);
@@ -336,25 +360,25 @@ body {
     font-size: var(--secondary-font);
     line-height: 16px;
     color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .project-titel, .feed-titel {
+}
+
+.project-titel, .feed-titel {
     font-size: var(--secondary-font-size);
     margin: 0;
     font-weight: 600;
-  }
+}
 
 
-  .project-datum {
+.project-datum {
     margin: 0;
     font-weight: 600;
     font-style: italic;
     font-size: 0.8em;
     color: var(--tertiary-font-color);
     position: relative;
-  }
-  
-  .project-datum::after {
+}
+
+.project-datum::after {
     content: "";
     display: block;
     position: absolute;
@@ -364,24 +388,26 @@ body {
     height: 3px;
     background: #3366FF;
     z-index: -1;
-  }
+}
 
-  .project-maken {
+.project-maken {
     margin: 0;
     color: var(--maak-project-font-color);
     font-size: var(--primary-font-size);
     font-weight: 600;
-  }
-  
-  .gebruikers {
+}
+
+.gebruikers {
     margin: 0;
     padding-top: 10px;
     font-size: 0.8em;
     font-weight: 600;
-  }
+}
+
 .lijst {
     margin: 0;
 }
+
 .lijst-element {
     margin: 0;
     font-size: 0.7em;
@@ -398,7 +424,7 @@ body {
     padding-right: 16px;
     padding-bottom: 10px;
     white-space: nowrap;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;;
 
 }
@@ -408,9 +434,9 @@ body {
     flex: 1;
     width: 100%;
     justify-content: center;
-  }
-  
-  .feed-inner {
+}
+
+.feed-inner {
     display: flex;
     width: 100%;
     max-width: calc(3 * 250px + 3 * 45px);
@@ -419,15 +445,16 @@ body {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     margin-bottom: 20px;
     flex-direction: column;
-  }
-  
-  .feed-titel {
+}
+
+.feed-titel {
     margin-top: 20px;
     margin-left: 20px;
     font-size: 2em;
     position: relative;
-  }
-  .feed-titel::after {
+}
+
+.feed-titel::after {
     content: "";
     display: block;
     position: absolute;
@@ -437,14 +464,15 @@ body {
     height: 10px;
     background: #FF7F01;
     z-index: -1;
-  }
-  .lijst-element-feed {
+}
+
+.lijst-element-feed {
     font-size: var(--secondary-font-size);
     font-weight: 600;
     margin-left: 50px;
-  }
-  
-  .navigation-link {
+}
+
+.navigation-link {
     display: block;
     color: #9e9fa4;
     display: flex;
@@ -459,9 +487,62 @@ body {
     margin: auto;
     margin-left: 1%;
     font-size: 20px;
-  }
-  
-  .navigation-link i {
+}
+
+.navigation-link i {
     width: 24px;
     height: 24px;
-  }
+}
+
+
+/* temp */
+
+* { box-sizing: border-box; }
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+.whiteText {
+    font-family: var(--secondary-font);
+    color: var(--primary-font-color);
+    font-size: var(--navbar-button-font-size);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 500px;
+    max-height: 50px;
+    white-space: nowrap;
+}
