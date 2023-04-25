@@ -499,17 +499,20 @@ body {
 
   .todoWrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 300px is the minimum width for each column */;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 10px;
     overflow-y: scroll;
+    overflow-x: hidden;
     justify-items: center;
     align-items: center;
     padding-bottom: 10px;
     padding-left: 10px;
     scroll-snap-type: y mandatory;
-    height: calc(2 * 15.5em + 10px * 2 );
-
-}
+    height: calc(2 * ((3 * 1.5em + 4.5em) + 15px));
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
 
 
   .todo {
@@ -517,7 +520,8 @@ body {
     flex-direction: column;
     background-color: var(--primary-panel-color);
     border-radius: 30px;
-    height: 15.5em ;
+    height: auto;
+    min-width: 15.5em;
     padding: 16px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     grid-template-columns:repeat(auto-fit,300px);
@@ -578,11 +582,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    overflow: scroll;
+    overflow-y: auto; 
+    max-height: calc(2 * 2.5em);
     scrollbar-width: none;
     scroll-snap-type: y mandatory;
+}
 
-  }
+.bottomTodo::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+
 
   .bottomTodo div {
     scroll-snap-align: start;
@@ -641,14 +652,17 @@ body {
   padding-left: 3em;
   padding-right: 3em;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
-  height: 5%;
+
+  /* height: 5%; */
 }
 
 .project_title_text {
   font-size: var(--primary-font-size);
   font-weight: 700;
   color: var(--primary-font-size);
+  margin: 0;
 
 }
 
@@ -680,7 +694,8 @@ body {
   text-decoration: none;
   background-color: var(--primary-button-background);
   border-radius: 5px;
-  width: 100px ;
+  width: 150px ;
+  height: 50px;
   border: none;
   font-size: var(--secondary-font-color);
   font-family: var(--secondary-font);
@@ -699,6 +714,8 @@ body {
   padding-top: 16px;
   padding-bottom: 0;
   height: 30%;
+  flex: 3;
+  margin-bottom: 10px;
 }
 
 .projectUsers {
@@ -717,6 +734,7 @@ body {
   padding: 1em;
   border-radius: 30px;
   overflow-y: scroll;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
   /* overflow-x: hidden; */
 }
 
@@ -746,14 +764,20 @@ body {
   border: none;
   background-color: transparent;
   text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(0, 0, 0, 0.5);
   font-style: italic;
-  color: rgba(0.0, 0.0, 0.0, 0.5);
+  color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
-  overflow: hidden; 
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 90%;
+  transition: color 0.5s, font-style 0.5s, transform 0.5s, text-decoration-thickness 0.5s, text-decoration-color 0.5s;
+  will-change: color, font-style, transform, text-decoration-thickness, text-decoration-color;
 }
+
+
 
 .finTodoForm {
   width: 100%;
@@ -762,16 +786,15 @@ body {
 }
 
 .fin_todoBtn:hover {
-  border: none;
-  background-color: transparent;
   text-decoration-line: none;
   font-style: normal;
-  color: rgba(0.0, 0.0, 0.0, 1);
+  color: rgba(0, 0, 0, 1);
   font-weight: 600;
-  transition: 0.5s
-  
+  transform: scale(1.1);
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(0, 0, 0, 1);
 }
-
+  
 /* Gebruikers  */
 
 .userHeader {
