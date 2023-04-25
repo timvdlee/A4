@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import ProjectForm
+from .forms import ProjectForm,TodoForm
 from datetime import datetime
 from .models import Project
 from django.contrib.auth import get_user_model
@@ -63,7 +63,7 @@ def project_pagina(request):
             "id": 5
             } for _ in range(50)
         ]
-    project_name_form = ProjectNaam(
+    project_name_form = ProjectForm(
         initial={
             'name': project_name
         }
