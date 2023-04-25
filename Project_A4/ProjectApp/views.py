@@ -1,12 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404,redirect
+from django.http import HttpResponseRedirect
 from .forms import ProjectForm,TodoForm
 from datetime import datetime
 from .models import Project
 from django.contrib.auth import get_user_model
 import json
 from django.contrib.auth.decorators import login_required
-
-
 import uuid
 import random
 from datetime import datetime, timedelta
@@ -23,7 +22,11 @@ def random_deadline(start_date, end_date):
     return start_date + timedelta(days=random_days, seconds=random_time)
 
 
-def project_pagina(request):
+def project(request,pk=None):
+    project = get_object_or_404(Project, pk=pk)
+    
+    project_name = project.name
+    
     start_date = datetime(2023, 4, 24)
     end_date = datetime(2023, 12, 31)
 
@@ -55,7 +58,6 @@ def project_pagina(request):
         for todo in todos
         ]
 
-    project_name = "Project"
     
     finished_todos = [
         {
@@ -73,6 +75,7 @@ def project_pagina(request):
 
     return render(request, 'project.html',
                   {
+                      "project_obj": project,
                       "finished_todos": finished_todos,
                       "project_name_form": project_name_form,
                       "todo_form": todo_forms,
@@ -96,6 +99,7 @@ def project_toevoegen(request):
             for x in usr_list:
                 obj.members.add(x)
             obj.save()
+            return HttpResponseRedirect(f"/project/{obj.id}/")
     
     selectable_users = {i["username"]: i["id"] for i in get_user_model().objects.filter(is_staff=False).exclude(id=request.user.id).values()}
     selectable_users = json.dumps(selectable_users)

@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="bottomTodo">
-                <form action={% url 'project' %} method="post">
+                <form action={% url 'project' pk=project_obj.pk %} method="post">
                     {% csrf_token %}
                     <div class="createSubTodo">
                         <input type="text" name="createTodo" class="addSubTodo" id="createTodo" value="" placeholder="To do">
@@ -47,7 +47,7 @@
                     </div>
                 </form>
                 {% for subTodo in todo.todo.subtodos %}
-                <form action={% url 'project' %} method="post">
+                <form action={% url 'project' pk=project_obj.pk %} method="post">
                     {% csrf_token %}
                     <div class="subTodo">
                         <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
@@ -61,7 +61,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Weizig Todo</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Wijzig Todo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -123,7 +123,7 @@
             <p class="finishedTodoText">Finished Todos</p>
             <div class="finishedTodo">
                 {% for f_todo in finished_todos %}
-                    <form class="finTodoForm" action={% url 'project' %} method="post">
+                    <form class="finTodoForm" action={% url 'project' pk=project_obj.pk %} method="post">
                         {% csrf_token %}
                         <input type="hidden" name="id" value={{f_todo.id}}>
                         •    <button type="submit" class="fin_todoBtn">{{f_todo.name}}</button>
@@ -138,7 +138,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Weizig project naam</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Wijzig project naam</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
