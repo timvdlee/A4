@@ -19,49 +19,38 @@
             <div class="pa_page_row">
                 <div class="pa_page_column">
                     <div class="pa_black_box">
-                        <br>
                         <div class="pa_text">Nieuw project aanmaken</div>
-                        <br>
-                        <form method="post" autocomplete="off">
+                        <form method="post" autocomplete="off" style="padding-left:16px; padding-right:5px">
                             {% csrf_token %}
-
-
-                            <div class="pa_inside_black_box">
-                                <div>
-                                    <br>
-                                    {% render_field project_form.name class="pa_user_input" placeholder="Naam"  %}
-                                    <br>
-
+                            <div class="content-box">
+                                <div class="pa_inside_black_box">
+                                    <div class="pa_user_input_box">
+                                        <label class="label-nieuw-project" for="naam_nieuw_project">Naam:</label>
+                                        {% render_field project_form.name class="pa_user_input" placeholder="Naam"  %}
+                                    </div>
+                                    <div class="pa_user_input_box">
+                                        {% comment %} {% render_field project_form.members class="pa_user_input" placeholder="Leden" %} {% endcomment %}
+                                        <label class="label-nieuw-project" for="naam_nieuw_project">Gebruikers toevoegen:</label>
+                                        <div class="autocomplete">
+                                            <input class="pa_user_input" id="userInput" type="text" name="users" placeholder="Gebruikers">
+                                            <button type="button" class="btn btn-danger" id="addUsrBtn" onclick="toevoegen()">Toevoegen</button>
+                                          </div>
+                                        <input type="hidden" name="members" id="hiddenUsers" value="[]">
+                                        <script type="text/javascript">
+                                            let users = {{selectable_users | safe}};
+                                         </script>
+                                        <p class="whiteText" id="userDisplay">
+                                            Gebruikers:
+                                        </p>
+                                    </div>
+                                    <div class="pa_user_input_box">
+                                        <label class="label-nieuw-project" for="naam_nieuw_project">Deadline:</label>
+                                        {% render_field project_form.deadline_date class="pa_user_input" placeholder="Deadline" %}
+                                    </div>
                                 </div>
-                                <div>
-                                                                        <br>
-
-                                    {% comment %} {% render_field project_form.members class="pa_user_input" placeholder="Leden" %} {% endcomment %}
-                                    
-                                    <div class="autocomplete">
-                                        <input class="pa_user_input" id="userInput" type="text" name="users" placeholder="Gebruikers">
-                                        <button type="button" class="btn btn-danger" id="addUsrBtn" onclick="toevoegen()">Toevoegen</button>
-                                      </div>
-                                    <input type="hidden" name="members" id="hiddenUsers" value="[]">
-                                    <script type="text/javascript"> 
-                                        let users = {{selectable_users | safe}};
-                                     </script>
-                                    <p class="whiteText" id="userDisplay">
-                                        Gebruikers:
-                                    </p>
-
-
-                                </div>
-                                <div>
-                                    {% render_field project_form.deadline_date class="pa_user_input" placeholder="Deadline" %}
-                                    <br>
-
-                                </div>
-                            </div>
                                 <div class="pa_button_inside_black_box">
-                                <br>
-                                <input type="submit" class="pa_button"
-                                       value="Maak project">
+                                    <input type="submit" class="pa_button" value="Maak project">
+                                </div>
                             </div>
                         </form>
                     </div>
