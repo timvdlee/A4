@@ -25,7 +25,14 @@ def random_deadline(start_date, end_date):
 def project(request,pk=None):
     project = get_object_or_404(Project, pk=pk)
     
-    project_name = project.name
+    if request.method == "POST":
+        if 'project-name-submit' in request.POST: # project naam aanpassen
+            project.name = request.POST.get("name")
+            project.save()
+    
+
+    project_users = [{"username": user.username, "role": "Admin" if user == project.admin_user else "Gebruiker","img":"none"} for user in project.members.all()]
+
     
     start_date = datetime(2023, 4, 24)
     end_date = datetime(2023, 12, 31)
@@ -67,24 +74,27 @@ def project(request,pk=None):
         ]
     project_name_form = ProjectForm(
         initial={
-            'name': project_name
+            'name': project.name
         }
     )
     
     add_todo = TodoForm()
+    
+ 
 
     return render(request, 'project.html',
                   {
                       "project_obj": project,
+                      "project_users": project_users,
                       "finished_todos": finished_todos,
                       "project_name_form": project_name_form,
                       "todo_form": todo_forms,
-                      "project_naam": project_name,
+                      "project_naam": project.name,
                       "add_todo": add_todo,
                    }
                   )
 
-
+@login_required
 def project_toevoegen(request):
     project_toev_form = ProjectForm()
     if request.method == "POST":
