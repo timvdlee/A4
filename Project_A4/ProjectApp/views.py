@@ -1,27 +1,30 @@
-from django.shortcuts import render, get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
-from .forms import ProjectForm,TodoForm
+from .forms import ProjectForm, TodoForm
 from datetime import datetime
-from .models import Project, User,Recent
+from .models import Project, User, Recent
 from django.contrib.auth import get_user_model
 import json
 from django.contrib.auth.decorators import login_required
 import uuid
 import random
 from datetime import datetime, timedelta
-from .models import Todo,SubTodo
+from .models import Todo, SubTodo
+
+
 # Create your views here.
 
 @login_required
 def home(request):
     projects_with_user = Project.objects.filter(
         members=User.objects.get(id=request.user.id)).order_by('creation_date')
-    recent_with_user = Recent.objects.filter(project__in=projects_with_user)
+    recent_with_user = Recent.objects.filter(project__in=projects_with_user).order_by('-date', '-time')
     return render(request, 'home.html',
                   {
                       "projects": projects_with_user,
-                      "feed": recent_with_user[:10][::-1],
+                      "feed": recent_with_user[:10],
                   })
+
 
 def random_deadline(start_date, end_date):
     delta = end_date - start_date
@@ -29,31 +32,35 @@ def random_deadline(start_date, end_date):
     random_time = random.randrange(24 * 3600)
     return start_date + timedelta(days=random_days, seconds=random_time)
 
+
 def add_to_recent(project, user, description):
     date = datetime.now().date()
     time = datetime.now().time()
     add_recent = Recent(user=user, project=project, date=date, time=time,
                         description=description)
     add_recent.save()
-    
+
+
 @login_required
-def project(request,pk=None):
+def project(request, pk=None):
     project = get_object_or_404(Project, pk=pk)
-    
+
     if request.method == "POST":
-        if 'project-name-submit' in request.POST: # project naam aanpassen
-            add_to_recent(project,request.user,f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
+        if 'project-name-submit' in request.POST:  # project naam aanpassen
+            add_to_recent(project, request.user,
+                          f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
             project.name = request.POST.get("name")
             project.save()
-        elif 'todo-toevoegen-submit' in request.POST: # Nieuwe todo aanmaken
+        elif 'todo-toevoegen-submit' in request.POST:  # Nieuwe todo aanmaken
             todo_form = TodoForm(request.POST)
             todo_form.completed = False
             if todo_form.is_valid():
                 td_db_obj = todo_form.save(commit=False)
                 td_db_obj.project = project
                 td_db_obj.save()
-                add_to_recent(project,request.user,f"{request.user} heeft todo {td_db_obj.name} aangemaakt in project {project.name}")
-        elif 'todo-update-submit' in request.POST: # Todo aanpassen
+                add_to_recent(project, request.user,
+                              f"{request.user} heeft todo {td_db_obj.name} aangemaakt in project {project.name}")
+        elif 'todo-update-submit' in request.POST:  # Todo aanpassen
             todo = Todo.objects.get(id=request.POST.get("id"))
             todo.name = request.POST.get("name")
             todo.project = project
@@ -61,48 +68,52 @@ def project(request,pk=None):
             todo.deadline_time = request.POST.get("deadline_time")
             todo.completed = True if request.POST.get("completed") else False
             todo.save()
-            add_to_recent(project,request.user,f"{request.user} heeft todo {todo.name} aangepast")
-        elif 'addSubTodo-submit' in request.POST: # Subtodo aanmaken
+            add_to_recent(project, request.user,
+                          f"{request.user} heeft todo {todo.name} aangepast")
+        elif 'addSubTodo-submit' in request.POST:  # Subtodo aanmaken
             subTodoDesc = request.POST.get("subTodoDesc")
             if len(subTodoDesc) > 0:
                 subtodo = SubTodo()
                 subtodo.todo = Todo.objects.get(id=request.POST.get("todoId"))
                 subtodo.description = subTodoDesc
                 subtodo.save()
-                add_to_recent(project,request.user,f"{request.user} heeft een subtodo aangemaakt in todo {subtodo.todo.name} van project {subtodo.todo.project.name}")
-        elif 'completeSubTodo-submit' in request.POST: # Subtodo verwijderen
+                add_to_recent(project, request.user,
+                              f"{request.user} heeft een subtodo aangemaakt in todo {subtodo.todo.name} van project {subtodo.todo.project.name}")
+        elif 'completeSubTodo-submit' in request.POST:  # Subtodo verwijderen
             subtodo = SubTodo.objects.filter(id=request.POST.get("subTodoId"))
             if len(subtodo) > 0:
-                add_to_recent(project,request.user,f"{request.user} heeft een subtodo afgerond van todo {subtodo[0].todo.name} uit project {subtodo[0].todo.project.name}")
+                add_to_recent(project, request.user,
+                              f"{request.user} heeft een subtodo afgerond van todo {subtodo[0].todo.name} uit project {subtodo[0].todo.project.name}")
                 subtodo[0].delete()
-        elif 'reActivateTodo-submit' in request.POST: # Todo's activeren
+        elif 'reActivateTodo-submit' in request.POST:  # Todo's activeren
             todo = Todo.objects.get(id=request.POST.get("id"))
             todo.completed = False
             todo.save()
-            add_to_recent(project,request.user,f"{request.user} heeft todo {todo.name} van project {todo.project.name} opnieuw geactiveerd")
+            add_to_recent(project, request.user,
+                          f"{request.user} heeft todo {todo.name} van project {todo.project.name} opnieuw geactiveerd")
         elif 'project-add-user' in request.POST:
             project = Project.objects.get(id=request.POST.get("project_id"))
             user = User.objects.get(username=request.POST.get("users"))
             # user_id = user.id
             project.members.add(user)
             project.save()
-            add_to_recent(project,request.user,f"{request.user} heeft {user} toegevoegd aan project {project.name}")
-            
+            add_to_recent(project, request.user,
+                          f"{request.user} heeft {user} toegevoegd aan project {project.name}")
 
-    project_users = [{"username": user.username, "role": "Admin" if user == project.admin_user else "Gebruiker","img":"none"} for user in project.members.all()]
+    project_users = [{"username": user.username,
+                      "role": "Admin" if user == project.admin_user else "Gebruiker",
+                      "img": "none"} for user in project.members.all()]
 
-
-    
     todos = [
         {
-        "name": todo.name,
-        "deadline_date": todo.deadline_date,
-        "deadline_time": todo.deadline_time,
-        "id": todo.id,
-        "completed": todo.completed,
-        "subtodos": [{"description": subTodo.description,"id":subTodo.id}
-         for subTodo in SubTodo.objects.filter(todo=todo)   
-        ]
+            "name": todo.name,
+            "deadline_date": todo.deadline_date,
+            "deadline_time": todo.deadline_time,
+            "id": todo.id,
+            "completed": todo.completed,
+            "subtodos": [{"description": subTodo.description, "id": subTodo.id}
+                         for subTodo in SubTodo.objects.filter(todo=todo)
+                         ]
         }
         for todo in Todo.objects.filter(project=project, completed=False)
     ]
@@ -114,29 +125,33 @@ def project(request,pk=None):
                 'deadline_date': todo['deadline_date'],
                 'deadline_time': todo['deadline_time'],
                 'completed': todo['completed']
-                })
-            }
+            })
+        }
         for todo in todos
-        ]
+    ]
 
     finished_todos = [
         {
             "name": fin_todo.name,
             "id": fin_todo.id
-            } for fin_todo in Todo.objects.filter(project=project, completed=True)
-        ]
+        } for fin_todo in Todo.objects.filter(project=project, completed=True)
+    ]
     project_name_form = ProjectForm(
         initial={
             'name': project.name
         }
     )
-    
+
     add_todo = TodoForm()
-    selectable_users = {i["username"]: i["id"] for i in get_user_model().objects.filter(is_staff=False).exclude(id=request.user.id).values()}
+    selectable_users = {i["username"]: i["id"] for i in
+                        get_user_model().objects.filter(
+                            is_staff=False).exclude(
+                            id=request.user.id).values()}
     temp_users = [user['username'] for user in project_users]
-    filtered_selectable_users = {user:id for user, id in selectable_users.items() if user not in temp_users}
+    filtered_selectable_users = {user: id for user, id in
+                                 selectable_users.items() if
+                                 user not in temp_users}
     selectable_users = json.dumps(filtered_selectable_users)
- 
 
     return render(request, 'project.html',
                   {
@@ -149,8 +164,9 @@ def project(request,pk=None):
                       "project_naam": project.name,
                       "add_todo": add_todo,
                       "selectable_users": selectable_users,
-                   }
+                  }
                   )
+
 
 @login_required
 def project_toevoegen(request):

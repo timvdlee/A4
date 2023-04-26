@@ -935,7 +935,6 @@ body {
 }
 
 .project-element:hover{
-  transform: scale(0.95);
   filter:none;
   border:2px solid var(--tertiary-font-color);
 }
@@ -967,25 +966,7 @@ body {
   color: black;
 }
 
-.project-element:hover{
-  transform: scale(0.95);
-  filter:none;
-  border:2px solid var(--tertiary-font-color);
-}
 
-.url-toevoegen {
-  color: black;
-  text-decoration: none;
-}
-
-.url-toevoegen:hover {
-  text-decoration: none;
-  color: black;
-}
-
-.toevoegen:hover{
-  border:2px solid var(--maak-project-font-color) ;
-}
 
 
 
