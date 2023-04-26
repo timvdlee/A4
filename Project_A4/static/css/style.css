@@ -421,7 +421,7 @@ body {
 .project-maken {
     margin: 0;
     color: var(--maak-project-font-color);
-    font-size: var(--primary-font-size);
+    font-size: x-large;
     font-weight: 600;
 }
 
@@ -612,4 +612,7 @@ body {
     transform: scale(0.95);
     filter:none;
     border:2px solid var(--tertiary-font-color);
+}
+.toevoegen:hover{
+    border:2px solid var(--maak-project-font-color) ;
 }

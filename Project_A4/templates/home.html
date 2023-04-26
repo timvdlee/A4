@@ -22,13 +22,18 @@
         </div>
         </a>
         {% endfor %}
-        <div class="project-element">
+          <a href="{% url 'project-toevoegen' %}" class="project-maken styling_projectdiv">
+
+            <div class="project-element toevoegen" >
+
           <div class="project-top">
             <p class="project-number">#</p>
             <p class="project-titel">Project XX</p>
-            <a href="{% url 'project-toevoegen' %}" class="project-maken">Maak project</a>
+            <p class="project-maken">Maak project</p>
           </div>
+
         </div>
+            </a>
       </div>
     </div>
   </div>
