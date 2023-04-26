@@ -148,3 +148,4 @@ dmypy.json
 aantekeningen.txt
 Project_A4/accounts/migrations/__init__.py
 Project_A4/accounts/__init__.py
+Project_A4/ProjectApp/migrations/0001_initial.py
