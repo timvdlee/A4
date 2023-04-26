@@ -27,7 +27,7 @@
             <div class="topTodo">
                 <div class="desc">
                     <p class="todoTitle" title='{{todo.todo.name}}'>Todo: {{todo.todo.name}}</p>
-                    <p class="todoDeadline">Deadline: {{todo.todo.deadline}}</p>
+                    <p class="todoDeadline">Deadline: {{todo.todo.deadline_time}} {{todo.todo.deadline_date}}</p>
                 </div>
                 <div class="editBtnWrapper">
                     <button class="todoEditBtn" type="button" data-bs-toggle="modal" data-bs-target="#{{todo.todo.id}}" data-bs-whatever="@mdo">
@@ -42,8 +42,9 @@
                 <form action={% url 'project' pk=project_obj.pk %} method="post">
                     {% csrf_token %}
                     <div class="createSubTodo">
-                        <input type="text" name="createTodo" class="addSubTodo" id="createTodo" value="" placeholder="To do">
-                        <button class="btn btn-primary addTodoBtn" type="submit">Add</button>
+                        <input type="hidden" name="todoId" value={{todo.todo.id}}>
+                        <input type="text" name="subTodoDesc" class="addSubTodo" id="createTodo" value="" placeholder="To do">
+                        <button class="btn btn-primary addTodoBtn" name="addSubTodo-submit" type="submit">Add</button>
                     </div>
                 </form>
                 {% for subTodo in todo.todo.subtodos %}
@@ -51,7 +52,8 @@
                     {% csrf_token %}
                     <div class="subTodo">
                         <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
-                        <button class="btn btn-success addTodoBtn" type="submit">✓</button>
+                        <input type="hidden" name="subTodoId" value={{subTodo.id}}>
+                        <button class="btn btn-success addTodoBtn" name="completeSubTodo-submit" type="submit">✓</button>
                     </div>
                 </form>
                 {% endfor %}
@@ -87,9 +89,10 @@
                           {% render_field todo.form.completed class="form-check-input"%}
                           <label > Afgerond</label>
                       </div>
-                  </div>            
+                  </div>
+                  <input type="hidden" name="id" value={{todo.todo.id}}>
                   <div class="modal-footer">
-                      <button type="submit" class="btn btn-danger modalBtn ms-2" name="{{todo.todo.id}}-todo-update-submit">Update</button>
+                      <button type="submit" class="btn btn-danger modalBtn ms-2" name="todo-update-submit">Update</button>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button>
                   </div>
                 </form>
@@ -126,7 +129,7 @@
                     <form class="finTodoForm" action={% url 'project' pk=project_obj.pk %} method="post">
                         {% csrf_token %}
                         <input type="hidden" name="id" value={{f_todo.id}}>
-                        •    <button type="submit" class="fin_todoBtn">{{f_todo.name}}</button>
+                        •    <button type="submit" name="reActivateTodo-submit" class="fin_todoBtn">{{f_todo.name}}</button>
                     </form>
                     {% endfor %}
                 </div>

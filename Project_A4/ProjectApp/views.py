@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 import uuid
 import random
 from datetime import datetime, timedelta
+from .models import Todo,SubTodo
 # Create your views here.
 
 
@@ -26,19 +27,41 @@ def project(request,pk=None):
     project = get_object_or_404(Project, pk=pk)
     
     if request.method == "POST":
+        print(request.POST)
         if 'project-name-submit' in request.POST: # project naam aanpassen
             project.name = request.POST.get("name")
             project.save()
-        elif 'todo-toevoegen-submit' in request.POST: #Todo opslaan of aanpassen
-            print(request.POST)
+        elif 'todo-toevoegen-submit' in request.POST: # Nieuwe todo aanmaken
             todo_form = TodoForm(request.POST)
             todo_form.completed = False
-            print(todo_form.is_valid())
-            print(todo_form.errors)
             if todo_form.is_valid():
-                todo_form.save()
-        elif 'todo-update-submit' in request.POST:
-            pass
+                td_db_obj = todo_form.save(commit=False)
+                td_db_obj.project = project
+                td_db_obj.save()
+        elif 'todo-update-submit' in request.POST: # Todo aanpassen
+            todo = Todo.objects.get(id=request.POST.get("id"))
+            todo.name = request.POST.get("name")
+            todo.project = project
+            todo.deadline_date = request.POST.get("deadline_date")
+            todo.deadline_time = request.POST.get("deadline_time")
+            todo.completed = True if request.POST.get("completed") else False
+            todo.save()
+        elif 'addSubTodo-submit' in request.POST: # Subtodo aanmaken
+            subTodoDesc = request.POST.get("subTodoDesc")
+            if len(subTodoDesc) > 0:
+                subtodo = SubTodo()
+                subtodo.todo = Todo.objects.get(id=request.POST.get("todoId"))
+                subtodo.description = subTodoDesc
+                subtodo.save()
+        elif 'completeSubTodo-submit' in request.POST: # Subtodo verwijderen
+            subtodo = SubTodo.objects.filter(id=request.POST.get("subTodoId"))
+            if len(subtodo) > 0:
+                subtodo[0].delete()
+        elif 'reActivateTodo-submit' in request.POST: # Todo's activeren
+            todo = Todo.objects.get(id=request.POST.get("id"))
+            todo.completed = False
+            todo.save()
+            
     
 
     project_users = [{"username": user.username, "role": "Admin" if user == project.admin_user else "Gebruiker","img":"none"} for user in project.members.all()]
@@ -47,40 +70,39 @@ def project(request,pk=None):
     start_date = datetime(2023, 4, 24)
     end_date = datetime(2023, 12, 31)
 
+
+    
     todos = [
         {
-            "name": f"{str(uuid.uuid4())}",
-            "deadline": (deadline := random_deadline(start_date, end_date)).strftime("%d-%m-%Y %H:%M"),
-            "deadline-date": deadline.strftime("%Y-%m-%d"),
-            "deadline_time": deadline.strftime("%H:%M"),
-            "id": _,
-            "subtodos": [
-                {
-                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                }
-                for _ in range(10)
-            ],
+        "name": todo.name,
+        "deadline_date": todo.deadline_date,
+        "deadline_time": todo.deadline_time,
+        "id": todo.id,
+        "completed": todo.completed,
+        "subtodos": [{"description": subTodo.description,"id":subTodo.id}
+         for subTodo in SubTodo.objects.filter(todo=todo)   
+        ]
         }
-        for _ in range(3)
+        for todo in Todo.objects.filter(project=project, completed=False)
     ]
     todo_forms = [
         {
             'todo': todo,
             'form': TodoForm(initial={
                 'name': todo['name'],
-                'deadline_date': todo['deadline-date'],
+                'deadline_date': todo['deadline_date'],
                 'deadline_time': todo['deadline_time'],
+                'completed': todo['completed']
                 })
             }
         for todo in todos
         ]
 
-    
     finished_todos = [
         {
-            "name": "Maken van een maken van een weet ik wel abcdefghijklmnopqrstuvwxyz",
-            "id": 5
-            } for _ in range(50)
+            "name": fin_todo.name,
+            "id": fin_todo.id
+            } for fin_todo in Todo.objects.filter(project=project, completed=True)
         ]
     project_name_form = ProjectForm(
         initial={
@@ -99,6 +121,7 @@ def project(request,pk=None):
                       "finished_todos": finished_todos,
                       "project_name_form": project_name_form,
                       "todo_form": todo_forms,
+                      "todos": todos,
                       "project_naam": project.name,
                       "add_todo": add_todo,
                    }

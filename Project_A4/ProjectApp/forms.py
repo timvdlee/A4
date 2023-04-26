@@ -38,7 +38,6 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
         fields = [
-            'project',
             'name',
             'deadline_date',
             'deadline_time',

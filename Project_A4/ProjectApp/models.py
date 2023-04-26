@@ -16,8 +16,8 @@ default_deadline = datetime.date.fromisoformat(ISO_deadline)
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    creation_date = models.DateField(default=default_date)
-    deadline_date = models.DateField(default=default_deadline)
+    creation_date = models.DateField(default=datetime.datetime.now().date())
+    deadline_date = models.DateField(default=datetime.date.fromisoformat('2024-01-01'))
     admin_user = models.ForeignKey(User, on_delete=models.CASCADE)
     members = models.ManyToManyField(User,
                                      related_name="project_members")
