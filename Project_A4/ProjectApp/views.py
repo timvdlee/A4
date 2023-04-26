@@ -10,7 +10,21 @@ import json
 
 
 def home(request):
-    return render(request, 'home.html')
+    print(Project.objects.all())
+    projects = [
+        {
+            "name": f"Project {_+1}",
+            "id": _ + 1,
+            "date": "13-04-2023 14:00",
+            "users": ["Jesse", "Ise", "Tim", "Salah"],
+            "edit": "date"
+        } for _ in range(10)
+    ]
+    return render(request, 'home.html',
+                  {
+                      "projects": projects,
+                  })
+
 
 
 def project_pagina(request):
