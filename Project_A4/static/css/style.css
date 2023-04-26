@@ -243,10 +243,10 @@ body {
     background-color: #242527;
     border-radius: 12px;
     padding: 5px;
-    
+
 }
 
-.pa_inside_black_box{
+.pa_inside_black_box {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -257,7 +257,7 @@ body {
     gap: 20px;
 }
 
-.pa_button_inside_black_box{
+.pa_button_inside_black_box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -282,6 +282,7 @@ body {
     font-size: 0.8em;
     margin: 0;
 }
+
 .pa_user_input {
     cursor: pointer;
     font-family: var(--secondary-font);
@@ -342,37 +343,40 @@ body {
 }
 
 .project-lijst-wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--project-box-gap);
-  overflow-x: hidden;
-  width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
-  height: calc(1*var(--project-box-size) + 40px);
-  max-width: 100%;
-  scroll-padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--project-box-gap);
+    overflow-x: hidden;
+    width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
+    height: calc(1 * var(--project-box-size) + 40px);
+    max-width: 100%;
+    scroll-padding-bottom: 20px;
+    scroll-snap-type: y mandatory;
 }
+
 .project-lijst {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-radius: 16px;
-  gap: var(--project-box-gap);
-  width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
-  height: calc(1*var(--project-box-size) + 40px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: 16px;
+    gap: var(--project-box-gap);
+    width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
+    height: calc(1 * var(--project-box-size) + 40px);
 }
 
 .project-element {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: var(--project-box-size);
-  height: var(--project-box-size);
-  background-color: var(--primary-panel-color);
-  border-radius: 16px;
-  font-family: var(--secondary-font);
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  padding-left: 16px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: var(--project-box-size);
+    height: var(--project-box-size);
+    background-color: var(--primary-panel-color);
+    border-radius: 16px;
+    font-family: var(--secondary-font);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding-left: 16px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    scroll-snap-align: start;
 }
 
 
@@ -405,16 +409,13 @@ body {
     position: relative;
 }
 
-.project-datum::after {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    width: 95%;
-    height: 3px;
-    background: #3366FF;
-    z-index: -1;
+
+.project-deadline {
+    margin: 0;
+    font-size: 0.7em;
+    font-style: italic;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .project-maken {
@@ -525,28 +526,30 @@ body {
 
 /* temp */
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 .autocomplete {
     position: relative;
     display: flex;
     flex-direction: row;
     gap: 10px;
-    align-items: stretch; 
-  }
-  
-  .autocomplete input.pa_user_input {
+    align-items: stretch;
+}
+
+.autocomplete input.pa_user_input {
     flex-grow: 1;
-  }
-  
-  
-  .autocomplete button {
+}
+
+
+.autocomplete button {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .autocomplete-items {
+}
+
+.autocomplete-items {
     position: absolute;
     border-bottom: none;
     border-top: none;
@@ -561,27 +564,26 @@ body {
     max-height: 200px;
     overflow-y: auto;
     margin-top: 10px;
-  }
-  
-  .autocomplete-items div {
+}
+
+.autocomplete-items div {
     padding: 10px;
     cursor: pointer;
     background-color: #fff;
     font-size: 0.8em;
-  }
-  
-  .autocomplete-items div:hover {
+}
+
+.autocomplete-items div:hover {
     background-color: #f1f1f1;
-  }
-  
-  .autocomplete-active {
+}
+
+.autocomplete-active {
     background-color: #007bff !important;
     color: #ffffff;
     outline: none;
     border: none;
-  }
-  
-  
+}
+
 
 .whiteText {
     font-family: var(--secondary-font);
@@ -594,4 +596,20 @@ body {
     max-width: 500px;
     max-height: 50px;
     white-space: nowrap;
+}
+
+.styling_projectdiv {
+    color: black;
+    text-decoration: none;
+}
+
+.styling_projectdiv:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.project-element:hover{
+    transform: scale(0.95);
+    filter:none;
+    border:2px solid var(--tertiary-font-color);
 }
