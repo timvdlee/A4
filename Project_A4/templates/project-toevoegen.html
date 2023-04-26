@@ -2,40 +2,61 @@
 {% load widget_tweaks %}
 {% load static %}
 
+{% block head %}
+
+    <script type="text/javascript"> 
+        let users = {{selectable_users | safe}};
+    </script>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock head %}
+
 {% block content %}
-  <form method="post">
-    {% csrf_token %}
-    <div class="pa_page_row">
-      <div class="pa_page_column">
+
+<div class="pa_page_row">
+    <div class="pa_page_column">
         <div class="pa_whitebox">
-          <div class="pa_page_row">
-            <div class="pa_page_column">
-              <div class="pa_black_box">
-                <br>
-                <div class="pa_text">Nieuw project aanmaken</div>
-                <br>
-                <div>
-                  <div>
-                    <p>Naam</p>
-                    {% render_field project_form.Naam_project class="pa_user_input" %}
-                  </div>
-                  <div>
-                    <p>Admin</p>
-                    {% render_field project_form.Admin class="pa_user_input" %}
-                  </div>
+            <div class="pa_page_row">
+                <div class="pa_page_column">
+                    <div class="pa_black_box">
+                        <div class="pa_text">Nieuw project aanmaken</div>
+                        <form method="post" autocomplete="off" style="padding-left:16px; padding-right:5px">
+                            {% csrf_token %}
+                            <div class="content-box">
+                                <div class="pa_inside_black_box">
+                                    <div class="pa_user_input_box">
+                                        <label class="label-nieuw-project" for="naam_nieuw_project">Naam:</label>
+                                        {% render_field project_form.name class="pa_user_input" placeholder="Naam"  %}
+                                    </div>
+                                    <div class="pa_user_input_box">
+                                        {% comment %} {% render_field project_form.members class="pa_user_input" placeholder="Leden" %} {% endcomment %}
+                                        <label class="label-nieuw-project" for="naam_nieuw_project">Gebruikers toevoegen:</label>
+                                        <div class="autocomplete">
+                                            <input class="pa_user_input" id="userInput" type="text" name="users" placeholder="Gebruikers">
+                                            <button type="button" class="btn btn-danger" id="addUsrBtn" onclick="toevoegen()">Toevoegen</button>
+                                          </div>
+                                        <input type="hidden" name="members" id="hiddenUsers" value="[]">
+                                        <script type="text/javascript">
+                                            let users = {{selectable_users | safe}};
+                                         </script>
+                                        <p class="whiteText" id="userDisplay">
+                                            Gebruikers:
+                                        </p>
+                                    </div>
+                                    <div class="pa_user_input_box">
+                                        <label class="label-nieuw-project" for="naam_nieuw_project">Deadline:</label>
+                                        {% render_field project_form.deadline_date class="pa_user_input" placeholder="Deadline" %}
+                                    </div>
+                                </div>
+                                <div class="pa_button_inside_black_box">
+                                    <input type="submit" class="pa_button" value="Maak project">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div>
-                  <div>
-                    <p>Datum aangemaakt</p>
-                    {% render_field project_form.Datum_aangemaakt class="pa_user_input" %}
-                  </div>
-                  <input type="submit" class="pa_button" value="Maak project">
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </form>
+</div>
 {% endblock %}
