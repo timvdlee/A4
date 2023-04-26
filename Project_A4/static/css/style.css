@@ -616,3 +616,13 @@ body {
 .toevoegen:hover{
     border:2px solid var(--maak-project-font-color) ;
 }
+
+.url-toevoegen {
+    color: black;
+    text-decoration: none;
+}
+
+.url-toevoegen:hover {
+    text-decoration: none;
+    color: black;
+}
