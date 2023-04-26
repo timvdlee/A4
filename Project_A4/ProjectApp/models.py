@@ -10,7 +10,7 @@ class Project(models.Model):
     creation_date = models.DateField()
     deadline_date = models.DateField()
     admin_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    members = models.ManyToManyField(get_user_model())
+    members = models.ManyToManyField(get_user_model(), related_name='project_members')
 
     class Meta:
         db_table = 'Project'

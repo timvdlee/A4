@@ -1,11 +1,12 @@
 from django.shortcuts import render
-
+from .models import Project
 # Create your views here.
 
 
 
 
 def home(request):
+    print(Project.objects.all())
     projects = [
         {
             "name": f"Project {_+1}",
