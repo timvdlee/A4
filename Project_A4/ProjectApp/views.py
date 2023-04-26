@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from .models import Todo,SubTodo
 # Create your views here.
 
-
+@login_required
 def home(request):
     projects_with_user = Project.objects.filter(
         members=User.objects.get(id=request.user.id)).order_by('creation_date')
@@ -35,12 +35,14 @@ def add_to_recent(project, user, description):
     add_recent = Recent(user=user, project=project, date=date, time=time,
                         description=description)
     add_recent.save()
-
+    
+@login_required
 def project(request,pk=None):
     project = get_object_or_404(Project, pk=pk)
     
     if request.method == "POST":
         if 'project-name-submit' in request.POST: # project naam aanpassen
+            add_to_recent(project,request.user,f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
             project.name = request.POST.get("name")
             project.save()
         elif 'todo-toevoegen-submit' in request.POST: # Nieuwe todo aanmaken
@@ -50,6 +52,7 @@ def project(request,pk=None):
                 td_db_obj = todo_form.save(commit=False)
                 td_db_obj.project = project
                 td_db_obj.save()
+                add_to_recent(project,request.user,f"{request.user} heeft todo {td_db_obj.name} aangemaakt in project {project.name}")
         elif 'todo-update-submit' in request.POST: # Todo aanpassen
             todo = Todo.objects.get(id=request.POST.get("id"))
             todo.name = request.POST.get("name")
@@ -58,6 +61,7 @@ def project(request,pk=None):
             todo.deadline_time = request.POST.get("deadline_time")
             todo.completed = True if request.POST.get("completed") else False
             todo.save()
+            add_to_recent(project,request.user,f"{request.user} heeft todo {todo.name} aangepast")
         elif 'addSubTodo-submit' in request.POST: # Subtodo aanmaken
             subTodoDesc = request.POST.get("subTodoDesc")
             if len(subTodoDesc) > 0:
@@ -65,20 +69,24 @@ def project(request,pk=None):
                 subtodo.todo = Todo.objects.get(id=request.POST.get("todoId"))
                 subtodo.description = subTodoDesc
                 subtodo.save()
+                add_to_recent(project,request.user,f"{request.user} heeft een subtodo aangemaakt in todo {subtodo.todo.name} van project {subtodo.todo.project.name}")
         elif 'completeSubTodo-submit' in request.POST: # Subtodo verwijderen
             subtodo = SubTodo.objects.filter(id=request.POST.get("subTodoId"))
             if len(subtodo) > 0:
+                add_to_recent(project,request.user,f"{request.user} heeft een subtodo afgerond van todo {subtodo[0].todo.name} uit project {subtodo[0].todo.project.name}")
                 subtodo[0].delete()
         elif 'reActivateTodo-submit' in request.POST: # Todo's activeren
             todo = Todo.objects.get(id=request.POST.get("id"))
             todo.completed = False
             todo.save()
+            add_to_recent(project,request.user,f"{request.user} heeft todo {todo.name} van project {todo.project.name} opnieuw geactiveerd")
         elif 'project-add-user' in request.POST:
             project = Project.objects.get(id=request.POST.get("project_id"))
             user = User.objects.get(username=request.POST.get("users"))
             # user_id = user.id
             project.members.add(user)
             project.save()
+            add_to_recent(project,request.user,f"{request.user} heeft {user} toegevoegd aan project {project.name}")
             
 
     project_users = [{"username": user.username, "role": "Admin" if user == project.admin_user else "Gebruiker","img":"none"} for user in project.members.all()]

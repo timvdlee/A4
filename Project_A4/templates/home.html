@@ -5,7 +5,7 @@
             <div class="project-lijst">
                 {% for project in projects %}
                 <a class="styling_projectdiv"
-                   href="{% url 'project' %}">
+                   href="{% url 'project' project.id %}">
                     <div class="project-element">
                         <div class="project-top">
                             <p class="project-number">#{{ project.id }}</p>
