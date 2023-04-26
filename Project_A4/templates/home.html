@@ -8,18 +8,15 @@
           <div class="project-top">
             <p class="project-number">#{{ project.id }}</p>
             <p class="project-titel"> {{ project.name }}</p>
-            <p class="project-datum">Aangemaakte: {{ project.date }} </p>
+            <p class="project-datum">Aangemaakte: {{ project.deadline_date }} </p>
             <p class="gebruikers">Gebruikers:</p>
             <ul class="lijst">
-              {% for user in project.users %}
-              <li class="lijst-element">{{ user }}</li>
+              {% for user in project.members.all %}
+              <li class="lijst-element">{{ user.username }}</li>
               {% endfor %}
             </ul>
           </div>
           <div class="project-bottom">
-            <p class="wijziging">
-              Laatste wijziging op dinsdag om 11:10 door Tim
-            </p>
           </div>
         </div>
         {% endfor %}
@@ -27,7 +24,7 @@
           <div class="project-top">
             <p class="project-number">#</p>
             <p class="project-titel">Project XX</p>
-            <p class="project-maken">Maak project</p>
+            <a href="{% url 'project-toevoegen' %}" class="project-maken">Maak project</a>
           </div>
         </div>
       </div>
@@ -56,4 +53,3 @@
 {% endblock content %}
 
 
-          {% block content %}{% endblock content %}

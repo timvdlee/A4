@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import ProjectForm
 from datetime import datetime
-from .models import Project
+from .models import Project, User
 from django.contrib.auth import get_user_model
 import json
 
@@ -10,10 +10,13 @@ import json
 
 
 def home(request):
-    print(Project.objects.all())
+    projects_with_user = Project.objects.filter(members=User.objects.get(id=request.user.id))
+    for project_now in projects_with_user:
+        print(project_now.name, list(project_now.members.all()))
+
     projects = [
         {
-            "name": f"Project {_+1}",
+            "name": f"Project {_ + 1}",
             "id": _ + 1,
             "date": "13-04-2023 14:00",
             "users": ["Jesse", "Ise", "Tim", "Salah"],
@@ -22,9 +25,8 @@ def home(request):
     ]
     return render(request, 'home.html',
                   {
-                      "projects": projects,
+                      "projects": projects_with_user,
                   })
-
 
 
 def project_pagina(request):
@@ -45,13 +47,14 @@ def project_toevoegen(request):
             for x in usr_list:
                 obj.members.add(x)
             obj.save()
-    
-    selectable_users = {i["username"]: i["id"] for i in get_user_model().objects.filter(is_staff=False).exclude(id=request.user.id).values()}
+
+    selectable_users = {i["username"]: i["id"] for i in
+                        get_user_model().objects.filter(
+                            is_staff=False).exclude(
+                            id=request.user.id).values()}
     selectable_users = json.dumps(selectable_users)
-    
-    
-    
+
     return render(request, 'project-toevoegen.html',
                   {'title': 'Project toevoegen',
                    'project_form': project_toev_form,
-                   "selectable_users":selectable_users})
+                   "selectable_users": selectable_users})
