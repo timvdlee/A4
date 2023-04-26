@@ -11,6 +11,15 @@
     <script src="{% static 'js/script.js' %}"></script>
 {% endblock head %}
 
+{% block head %}
+
+    <script type="text/javascript"> 
+        let users = {{selectable_users | safe}};
+    </script>
+    
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock head %}
+
 {% block content %}
 
 <div class="pa_page_row">

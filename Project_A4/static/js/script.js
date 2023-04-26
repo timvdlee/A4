@@ -22,8 +22,7 @@ function autocomplete(inp, arr) {
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function(e) {
-      var a, b, i, val = this.value;
-      let found = false;
+        var a, b, i, val = this.value;
         /*close any already open lists of autocompleted values*/
         closeAllLists();
         if (!val) { return false;}
@@ -38,7 +37,6 @@ function autocomplete(inp, arr) {
         for (i = 0; i < arr.length; i++) {
           /*check if the item starts with the same letters as the text field value:*/
           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-            found = true;
             /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
             /*make the matching letters bold:*/
@@ -57,14 +55,7 @@ function autocomplete(inp, arr) {
             a.appendChild(b);
           }
         }
-        if (!found) {
-          const noResultsDiv = document.createElement("DIV");
-          noResultsDiv.classList.add("autocomplete-item");
-          noResultsDiv.innerHTML = "Geen gebruikers gevonden!";
-          a.appendChild(noResultsDiv);
-        }
     });
-
     /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function(e) {
         var x = document.getElementById(this.id + "autocomplete-list");

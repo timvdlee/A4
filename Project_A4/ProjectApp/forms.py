@@ -1,16 +1,10 @@
+from ProjectApp.models import Project, Todo
 from django import forms
-from .models import Project
 from django.contrib.auth import get_user_model
 
 
 class ProjectForm(forms.ModelForm):
     name = forms.CharField(required=False)
-    # members = forms.ModelMultipleChoiceField(
-    #     queryset=get_user_model().objects.filter(is_staff=False),
-    #     widget=forms.SelectMultiple(attrs={'size': 10}),
-    #     # Use SelectMultiple widget with 'size' attribute for scrollable list
-    #     required=False
-    # )
     deadline_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         required=True
@@ -18,4 +12,34 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ["name", "deadline_date"]
+        fields = ['name']
+
+
+
+class TodoForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(),
+        required=True
+    )
+    deadline_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=True
+    )
+    deadline_time = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        required=True
+    )
+    completed = forms.BooleanField(
+        widget=forms.CheckboxInput(),
+        required=False
+    )
+
+    class Meta:
+        model = Todo
+        fields = [
+            'name',
+            'deadline_date',
+            'deadline_time',
+            'completed',
+        ]

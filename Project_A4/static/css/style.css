@@ -18,6 +18,7 @@
     --primary-font-size: 1.5em;
     --secondary-font-size: 1em;
     --tertiary-font-size: 3em;
+    --todo-header-font-size: 0.7em;
     --navbar-button-font-size: 0.8em;
     --primary-panel-color: #fff;
     --primary-button-background: #FE2E2E;
@@ -394,12 +395,17 @@ body {
 }
 
 .project-titel, .feed-titel {
+}
+
+.project-titel, .feed-titel {
     font-size: var(--secondary-font-size);
     margin: 0;
     font-weight: 600;
 }
+}
 
 
+.project-datum {
 .project-datum {
     margin: 0;
     font-weight: 600;
@@ -419,10 +425,14 @@ body {
 }
 
 .project-maken {
+.project-maken {
     margin: 0;
     color: var(--maak-project-font-color);
     font-size: var(--primary-font-size);
     font-weight: 600;
+}
+
+.gebruikers {
 }
 
 .gebruikers {
@@ -432,9 +442,12 @@ body {
     font-weight: 600;
 }
 
+}
+
 .lijst {
     margin: 0;
 }
+
 
 .lijst-element {
     margin: 0;
@@ -454,6 +467,7 @@ body {
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;;
 
 }
@@ -463,6 +477,9 @@ body {
     flex: 1;
     width: 100%;
     justify-content: center;
+}
+
+.feed-inner {
 }
 
 .feed-inner {
@@ -477,10 +494,16 @@ body {
 }
 
 .feed-titel {
+}
+
+.feed-titel {
     margin-top: 20px;
     margin-left: 20px;
     font-size: 2em;
     position: relative;
+}
+
+.feed-titel::after {
 }
 
 .feed-titel::after {
@@ -496,9 +519,15 @@ body {
 }
 
 .lijst-element-feed {
+}
+
+.lijst-element-feed {
     font-size: var(--secondary-font-size);
     font-weight: 600;
     margin-left: 50px;
+}
+
+.navigation-link {
 }
 
 .navigation-link {
@@ -523,67 +552,377 @@ body {
     height: 24px;
 }
 
+  /* Todo's */
+
+  .todoWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 300px is the minimum width for each column */;
+    gap: 10px;
+    overflow-y: scroll;
+    justify-items: center;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    scroll-snap-type: y mandatory;
+    height: calc(2 * 15.5em + 10px * 2 );
+
+}
+
+
+  .todo {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-panel-color);
+    border-radius: 30px;
+    height: 15.5em ;
+    padding: 16px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    grid-template-columns:repeat(auto-fit,300px);
+    scroll-snap-align: start;
+    margin-bottom: 5px;
+  }
+
+  .topTodo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .topTodo p {
+    margin: 0
+
+  }
+
+  .todoTitle {
+    font-size: var(--secondary-font-size);
+    font-weight: 600;
+    /* height: 2em; */
+    width: 13em;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .todoDeadline {
+    font-style: italic;
+    color: rgba(0.0, 0.0, 0.0, 0.5);
+    font-weight: 600;
+    display: flex;
+    text-align: left;
+    font-size: var(--todo-header-font-size);
+  }
+
+  
+  .todoEditBtn {
+    background: none;
+    border: none;
+  }
+
+  .todoEditBtn:hover {
+    color: var(--secondary-button-background);
+  }
+
+  .todoEditBtn:focus {
+    outline: none;
+  }
+  .todoDots {
+    transform: rotate(90deg);
+    outline: none;
+
+  }
+
+  .bottomTodo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: scroll;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+
+  }
+
+  .bottomTodo div {
+    scroll-snap-align: start;
+  }
+
+  .bottomTodo::-webkit-scrollbar{
+    display: none;
+  }
+
+.addSubTodo {
+  border: 1px solid var(--secondary-button-background);
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 0.8em;
+}
+.addSubTodo:focus {
+  outline: none;
+}
+
+.createSubTodo, .subTodo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+
+}
+
+
+
+.addTodoBtn{
+  border-radius: 8px;
+  width: 70px;
+  font-size: 0.7em;
+}
+
+
+.projectContent{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ProjectHeader */
+.projectTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.projectHeader {
+  display: flex;
+  flex-direction: row;
+  padding-left: 3em;
+  padding-right: 3em;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  height: 5%;
+}
+
+.project_title_text {
+  font-size: var(--primary-font-size);
+  font-weight: 700;
+  color: var(--primary-font-size);
+
+}
+
+.nameEditBtn {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: x-large;
+  height: 100%;
+}
+
+.nameEditBtn i {
+  transform: translate(0,7.5%);
+}
+
+.nameEditBtn:focus {
+  outline: none;
+}
+
+.nameEditBtn:hover {
+  color: var(--secondary-button-background)
+}
+
+.addTodoButton {
+  color: var(--primary-font-color);
+  font-size: var(--navbar-button-font-size);
+  text-decoration: none;
+  background-color: var(--primary-button-background);
+  border-radius: 5px;
+  width: 100px ;
+  border: none;
+  font-size: var(--secondary-font-color);
+  font-family: var(--secondary-font);
+}
+
+.addTodoButton:focus {
+  outline: none;
+}
+
+.pageBottom {
+  display: flex;
+  flex-direction: row;
+  gap: 5em;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
+  padding-bottom: 0;
+  height: 30%;
+}
+
+.projectUsers {
+  display: flex;
+  flex: 1;
+  background-color: var(--primary-panel-color);
+  border-radius: 30px;
+}
+/* Finished todo's */
+
+.finishedTodoWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background-color: var(--primary-panel-color);
+  padding: 1em;
+  border-radius: 30px;
+  overflow-y: scroll;
+  /* overflow-x: hidden; */
+}
+
+.finishedTodoText {
+  font-size: var(--primary-font-size);
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-color: var(--primary-button-background);
+  text-decoration-thickness: 5px;
+
+}
+
+
+
+  
+.finishedTodo {
+  display: grid;
+  flex-direction: row;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(2,1fr);
+  padding-left: 3em;
+  width: 100%;
+  max-width: 100%;
+}
+
+.fin_todoBtn {
+  border: none;
+  background-color: transparent;
+  text-decoration-line: underline;
+  font-style: italic;
+  color: rgba(0.0, 0.0, 0.0, 0.5);
+  font-weight: 600;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
+}
+
+.finTodoForm {
+  width: 100%;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
+.fin_todoBtn:hover {
+  border: none;
+  background-color: transparent;
+  text-decoration-line: none;
+  font-style: normal;
+  color: rgba(0.0, 0.0, 0.0, 1);
+  font-weight: 600;
+  transition: 0.5s
+  
+}
+
+/* Gebruikers  */
+
+.userHeader {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 20%;
+}
+
+.users {
+  height: 80%;
+  display: grid;
+  flex-direction: row;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(3,1fr);
+  padding-left: 3em;
+  width: 100%;
+  max-width: 100%;
+  overflow-y: auto;
+}
+
+.projectUsers {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+/* modals */
+
+.modalBtn {
+  background-color: var(--primary-button-background);
+}
+  .navigation-link {
+    display: block;
+    color: #9e9fa4;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    height: 50px; /* increase height */
+    line-height: 50px; /* increase line-height */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+    white-space: nowrap;
+    margin: auto;
+    margin-left: 1%;
+    font-size: 20px;
+  }
+  
+  .navigation-link i {
+    width: 24px;
+    height: 24px;
+  }
+
 
 /* temp */
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 .autocomplete {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: stretch;
-}
-
-.autocomplete input.pa_user_input {
-    flex-grow: 1;
-}
-
-
-.autocomplete button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .autocomplete-items {
-    position: absolute;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    max-height: 200px;
-    overflow-y: auto;
-    margin-top: 10px;
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
 }
-
 .autocomplete-items div {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #fff;
-    font-size: 0.8em;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
 }
-
 .autocomplete-items div:hover {
-    background-color: #f1f1f1;
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
 }
-
 .autocomplete-active {
-    background-color: #007bff !important;
-    color: #ffffff;
-    outline: none;
-    border: none;
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
 }
-
 
 .whiteText {
     font-family: var(--secondary-font);
@@ -599,17 +938,68 @@ body {
 }
 
 .styling_projectdiv {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .styling_projectdiv:hover {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 .project-element:hover{
-    transform: scale(0.95);
-    filter:none;
-    border:2px solid var(--tertiary-font-color);
+  transform: scale(0.95);
+  filter:none;
+  border:2px solid var(--tertiary-font-color);
+}.styling_projectdiv {
+  color: black;
+  text-decoration: none;
 }
+
+.styling_projectdiv:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.project-element:hover{
+  transform: scale(0.95);
+  filter:none;
+  border:2px solid var(--tertiary-font-color);
+}
+
+
+.styling_projectdiv {
+  color: black;
+  text-decoration: none;
+}
+
+.styling_projectdiv:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.project-element:hover{
+  transform: scale(0.95);
+  filter:none;
+  border:2px solid var(--tertiary-font-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
