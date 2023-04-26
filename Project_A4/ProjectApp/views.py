@@ -29,6 +29,16 @@ def project(request,pk=None):
         if 'project-name-submit' in request.POST: # project naam aanpassen
             project.name = request.POST.get("name")
             project.save()
+        elif 'todo-toevoegen-submit' in request.POST: #Todo opslaan of aanpassen
+            print(request.POST)
+            todo_form = TodoForm(request.POST)
+            todo_form.completed = False
+            print(todo_form.is_valid())
+            print(todo_form.errors)
+            if todo_form.is_valid():
+                todo_form.save()
+        elif 'todo-update-submit' in request.POST:
+            pass
     
 
     project_users = [{"username": user.username, "role": "Admin" if user == project.admin_user else "Gebruiker","img":"none"} for user in project.members.all()]
@@ -51,7 +61,7 @@ def project(request,pk=None):
                 for _ in range(10)
             ],
         }
-        for _ in range(36)
+        for _ in range(3)
     ]
     todo_forms = [
         {

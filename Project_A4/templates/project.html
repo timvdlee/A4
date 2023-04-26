@@ -89,7 +89,7 @@
                       </div>
                   </div>            
                   <div class="modal-footer">
-                      <button type="submit" class="btn btn-danger modalBtn ms-2" name="{{todo.todo.id}}-submit">Update</button>
+                      <button type="submit" class="btn btn-danger modalBtn ms-2" name="{{todo.todo.id}}-todo-update-submit">Update</button>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button>
                   </div>
                 </form>
@@ -146,7 +146,7 @@
             {% csrf_token %}
             <div class="d-flex">
               {% render_field project_name_form.name class="form-control" placeholder="Project naam" %}
-              <button type="submit" class="btn btn-danger modalBtn ms-2" name="project-name-submit">Update</button>
+              <button type="submit" class="btn btn-danger modalBtn ms-2" name="project-name-submit">Opslaan</button>
             </div>
             <div class="modal-footer">
               {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button> {% endcomment %}
@@ -191,7 +191,7 @@
                 </div>
             </div>             {% endcomment %}
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger modalBtn ms-2" name="todo-toevoegen-submit">Update</button>
+                <button type="submit" class="btn btn-danger modalBtn ms-2" name="todo-toevoegen-submit">Opslaan</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button>
             </div>
           </form>
