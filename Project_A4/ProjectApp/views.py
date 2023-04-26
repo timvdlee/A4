@@ -10,19 +10,7 @@ import json
 
 
 def home(request):
-    projects_with_user = Project.objects.filter(members=User.objects.get(id=request.user.id))
-    for project_now in projects_with_user:
-        print(project_now.name, list(project_now.members.all()))
-
-    projects = [
-        {
-            "name": f"Project {_ + 1}",
-            "id": _ + 1,
-            "date": "13-04-2023 14:00",
-            "users": ["Jesse", "Ise", "Tim", "Salah"],
-            "edit": "date"
-        } for _ in range(10)
-    ]
+    projects_with_user = Project.objects.filter(members=User.objects.get(id=request.user.id)).order_by('creation_date')
     return render(request, 'home.html',
                   {
                       "projects": projects_with_user,

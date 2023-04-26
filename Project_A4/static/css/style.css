@@ -405,17 +405,6 @@ body {
     position: relative;
 }
 
-.project-datum::after {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    width: 95%;
-    height: 3px;
-    background: #3366FF;
-    z-index: -1;
-  }
 
   .project-deadline {
     margin: 0;
