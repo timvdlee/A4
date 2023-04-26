@@ -24,6 +24,8 @@
     --secondary-button-background: #3366FF;
     --tertiary-button-background: #52BF90;
     --quaternary-button-background: #CB2C31;
+    --project-box-size: 14em;
+    --project-box-gap: 10px;
 }
 
 html, body {
@@ -340,31 +342,39 @@ body {
 }
 
 .project-lijst-wrapper {
-    overflow-x: auto;
-    width: 100%;
-    max-width: calc(3 * 250px + 3 * 45px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--project-box-gap);
+  overflow-x: hidden;
+  width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
+  height: calc(1*var(--project-box-size) + 40px);
+  max-width: 100%;
+  scroll-padding-bottom: 20px;
 }
-
 .project-lijst {
-    display: flex;
-    border-radius: 16px;
-    flex-direction: row;
-    gap: 50px;
-    flex-wrap: nowrap;
-    min-width: max-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 16px;
+  gap: var(--project-box-gap);
+  width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
+  height: calc(1*var(--project-box-size) + 40px);
 }
 
 .project-element {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    height: 250px;
-    background-color: var(--primary-panel-color);
-    border-radius: 16px;
-    font-family: var(--secondary-font);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: var(--project-box-size);
+  height: var(--project-box-size);
+  background-color: var(--primary-panel-color);
+  border-radius: 16px;
+  font-family: var(--secondary-font);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  padding-left: 16px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
+
 
 .project-number {
     margin: 0;
@@ -390,7 +400,7 @@ body {
     margin: 0;
     font-weight: 600;
     font-style: italic;
-    font-size: 0.8em;
+    font-size: 0.65em;
     color: var(--tertiary-font-color);
     position: relative;
 }
@@ -401,7 +411,7 @@ body {
     position: absolute;
     bottom: 5px;
     left: 0;
-    width: 78%;
+    width: 95%;
     height: 3px;
     background: #3366FF;
     z-index: -1;
@@ -424,7 +434,8 @@ body {
 
 .gebruikers {
     margin: 0;
-    font-size: 0.8em;
+    padding-top: 10px;
+    font-size: 1em;
     font-weight: 600;
 }
 
@@ -434,10 +445,10 @@ body {
 
 .lijst-element {
     margin: 0;
-    font-size: 0.7em;
+    font-size: 0.9em;
 }
 
-.wijzeging {
+.wijziging {
     text-align: right;
     font-family: 'Poppins';
     font-style: italic;
@@ -447,6 +458,7 @@ body {
     color: rgba(0, 0, 0, 0.5);
     padding-right: 16px;
     padding-bottom: 10px;
+    margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;;
