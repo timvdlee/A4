@@ -106,7 +106,8 @@
         <div class="projectUsers">
             <div class="userHeader">
                 <p class="finishedTodoText">Gebruikers</p>
-                <button class="addTodoButton">Add gebruiker</button>
+                <button class="addTodoButton" type="button" data-bs-toggle="modal" data-bs-target="#todo-toevoegen" data-bs-whatever="@mdo">Add gebruiker</button>
+                <!-- <button class="addTodoButton">Add gebruiker</button> -->
             </div>
             <div class="users">
                 {% for user in project_users  %}

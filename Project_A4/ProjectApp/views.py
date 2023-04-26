@@ -27,7 +27,6 @@ def project(request,pk=None):
     project = get_object_or_404(Project, pk=pk)
     
     if request.method == "POST":
-        print(request.POST)
         if 'project-name-submit' in request.POST: # project naam aanpassen
             project.name = request.POST.get("name")
             project.save()
