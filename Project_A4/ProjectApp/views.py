@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponseRedirect
 from .forms import ProjectForm,TodoForm
 from datetime import datetime
-from .models import Project
+from .models import Project, User
 from django.contrib.auth import get_user_model
 import json
 from django.contrib.auth.decorators import login_required
@@ -60,6 +60,12 @@ def project(request,pk=None):
             todo = Todo.objects.get(id=request.POST.get("id"))
             todo.completed = False
             todo.save()
+        elif 'project-add-user' in request.POST:
+            project = Project.objects.get(id=request.POST.get("project_id"))
+            user = User.objects.get(username=request.POST.get("users"))
+            # user_id = user.id
+            project.members.add(user)
+            project.save()
             
     
 
@@ -110,7 +116,10 @@ def project(request,pk=None):
     )
     
     add_todo = TodoForm()
-    
+    selectable_users = {i["username"]: i["id"] for i in get_user_model().objects.filter(is_staff=False).exclude(id=request.user.id).values()}
+    temp_users = [user['username'] for user in project_users]
+    filtered_selectable_users = {user:id for user, id in selectable_users.items() if user not in temp_users}
+    selectable_users = json.dumps(filtered_selectable_users)
  
 
     return render(request, 'project.html',
@@ -123,6 +132,7 @@ def project(request,pk=None):
                       "todos": todos,
                       "project_naam": project.name,
                       "add_todo": add_todo,
+                      "selectable_users": selectable_users,
                    }
                   )
 
@@ -137,6 +147,7 @@ def project_toevoegen(request):
             obj.admin_user = request.user
             obj.save()
             usr_list = json.loads(request.POST.get('members'))
+            print(request.POST.get('members'))
             obj.members.add(request.user.id)
             for x in usr_list:
                 obj.members.add(x)

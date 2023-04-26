@@ -791,6 +791,7 @@ body {
   padding-left: 3em;
   width: 100%;
   max-width: 100%;
+  overflow-y: auto;
 }
 
 .projectUsers {
