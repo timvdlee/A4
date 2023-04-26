@@ -25,7 +25,7 @@
     --secondary-button-background: #3366FF;
     --tertiary-button-background: #52BF90;
     --quaternary-button-background: #CB2C31;
-    --project-box-size: 14em;
+    --project-box-size: 18em;
     --project-box-gap: 10px;
 }
 
@@ -348,7 +348,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--project-box-gap);
     overflow-x: hidden;
-    width: calc(3 * var(--project-box-size) + 3 * var(--project-box-gap));
+    width: calc(3 * var(--project-box-size) + 5 * var(--project-box-gap));
     height: calc(1 * var(--project-box-size) + 40px);
     max-width: 100%;
     scroll-padding-bottom: 20px;
@@ -423,7 +423,7 @@ body {
 .project-maken {
     margin: 0;
     color: var(--maak-project-font-color);
-    font-size: var(--primary-font-size);
+    font-size: x-large;
     font-weight: 600;
 }
 
@@ -938,6 +938,23 @@ body {
   transform: scale(0.95);
   filter:none;
   border:2px solid var(--tertiary-font-color);
+}
+.toevoegen:hover{
+    border:2px solid var(--maak-project-font-color) ;
+}
+
+.url-toevoegen {
+    color: black;
+    text-decoration: none;
+}
+
+.url-toevoegen:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.feed-lijst{
+    overflow-y: auto;
 }
 
 .styling_projectdiv {
