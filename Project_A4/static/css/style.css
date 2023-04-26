@@ -394,18 +394,14 @@ body {
     color: rgba(0, 0, 0, 0.5);
 }
 
-.project-titel, .feed-titel {
-}
 
 .project-titel, .feed-titel {
     font-size: var(--secondary-font-size);
     margin: 0;
     font-weight: 600;
 }
-}
 
 
-.project-datum {
 .project-datum {
     margin: 0;
     font-weight: 600;
@@ -425,15 +421,13 @@ body {
 }
 
 .project-maken {
-.project-maken {
     margin: 0;
     color: var(--maak-project-font-color);
     font-size: var(--primary-font-size);
     font-weight: 600;
 }
 
-.gebruikers {
-}
+
 
 .gebruikers {
     margin: 0;
@@ -442,7 +436,6 @@ body {
     font-weight: 600;
 }
 
-}
 
 .lijst {
     margin: 0;
@@ -479,8 +472,6 @@ body {
     justify-content: center;
 }
 
-.feed-inner {
-}
 
 .feed-inner {
     display: flex;
@@ -493,8 +484,7 @@ body {
     flex-direction: column;
 }
 
-.feed-titel {
-}
+
 
 .feed-titel {
     margin-top: 20px;
@@ -503,8 +493,7 @@ body {
     position: relative;
 }
 
-.feed-titel::after {
-}
+
 
 .feed-titel::after {
     content: "";
@@ -518,8 +507,7 @@ body {
     z-index: -1;
 }
 
-.lijst-element-feed {
-}
+
 
 .lijst-element-feed {
     font-size: var(--secondary-font-size);
@@ -527,8 +515,7 @@ body {
     margin-left: 50px;
 }
 
-.navigation-link {
-}
+
 
 .navigation-link {
     display: block;

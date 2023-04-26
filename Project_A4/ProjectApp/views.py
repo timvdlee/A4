@@ -29,6 +29,12 @@ def random_deadline(start_date, end_date):
     random_time = random.randrange(24 * 3600)
     return start_date + timedelta(days=random_days, seconds=random_time)
 
+def add_to_recent(project, user, description):
+    date = datetime.now().date()
+    time = datetime.now().time()
+    add_recent = Recent(user=user, project=project, date=date, time=time,
+                        description=description)
+    add_recent.save()
 
 def project(request,pk=None):
     project = get_object_or_404(Project, pk=pk)
@@ -74,22 +80,8 @@ def project(request,pk=None):
             project.members.add(user)
             project.save()
             
-    
-def add_to_recent(project, user, description):
-    date = datetime.now().date()
-    time = datetime.now().time()
-    add_recent = Recent(user=user, project=project, date=date, time=time,
-                        description=description)
-    add_recent.save()
-
-
-
 
     project_users = [{"username": user.username, "role": "Admin" if user == project.admin_user else "Gebruiker","img":"none"} for user in project.members.all()]
-
-    
-    start_date = datetime(2023, 4, 24)
-    end_date = datetime(2023, 12, 31)
 
 
     
