@@ -951,22 +951,7 @@ body {
   transform: scale(0.95);
   filter:none;
   border:2px solid var(--tertiary-font-color);
-}.styling_projectdiv {
-  color: black;
-  text-decoration: none;
 }
-
-.styling_projectdiv:hover {
-  text-decoration: none;
-  color: black;
-}
-
-.project-element:hover{
-  transform: scale(0.95);
-  filter:none;
-  border:2px solid var(--tertiary-font-color);
-}
-
 
 .styling_projectdiv {
   color: black;
@@ -983,9 +968,6 @@ body {
   filter:none;
   border:2px solid var(--tertiary-font-color);
 }
-
-
-
 
 
 
