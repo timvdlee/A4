@@ -36,17 +36,11 @@
     <div class="feed-inner">
       <p class="feed-titel">Recente activiteiten:</p>
       <ul class="feed-lijst">
+        {% for element in feed %}
         <li class="lijst-element-feed">
-          Todo Test gemaakt voor project 1 door Tim.
+          {{element.description}}
         </li>
-        <li class="lijst-element-feed">
-          Deadline voor project 2 is uitgesteld door Salah.
-        </li>
-        <li class="lijst-element-feed">
-          Ise M heeft gebruiker Jesse M toegevoegd aan project 1.
-        </li>
-        <li class="lijst-element-feed">-</li>
-        <li class="lijst-element-feed">-</li>
+        {% endfor %}
       </ul>
     </div>
   </div>

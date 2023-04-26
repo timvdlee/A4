@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import ProjectForm
 from datetime import datetime
-from .models import Project, User
+from .models import Project, User, Recent
 from django.contrib.auth import get_user_model
 import json
 
@@ -10,15 +10,27 @@ import json
 
 
 def home(request):
-    projects_with_user = Project.objects.filter(members=User.objects.get(id=request.user.id)).order_by('creation_date')
+    projects_with_user = Project.objects.filter(
+        members=User.objects.get(id=request.user.id)).order_by('creation_date')
+    recent_with_user = Recent.objects.filter(project__in=projects_with_user)
     return render(request, 'home.html',
                   {
                       "projects": projects_with_user,
+                      "feed": recent_with_user[:10][::-1],
                   })
 
 
 def project_pagina(request):
     return render(request, 'project-pagina.html')
+
+
+def add_to_recent(project, user, description):
+    date = datetime.now().date()
+    time = datetime.now().time()
+    add_recent = Recent(user=user, project=project, date=date, time=time,
+                        description=description)
+    add_recent.save()
+
 
 
 def project_toevoegen(request):
@@ -35,6 +47,8 @@ def project_toevoegen(request):
             for x in usr_list:
                 obj.members.add(x)
             obj.save()
+            add_to_recent(obj, request.user,
+                          f"{request.user} heeft project {obj.name} aangemaakt.")
 
     selectable_users = {i["username"]: i["id"] for i in
                         get_user_model().objects.filter(
