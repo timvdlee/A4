@@ -169,6 +169,7 @@ body {
     font-size: var(--secondary-font-size);
     color: var(--secondary-font-color);
     background: var(--primary-app-background);
+    margin-top: 10px;
 
 
 }
@@ -558,6 +559,7 @@ body {
     padding-left: 10px;
     scroll-snap-type: y mandatory;
     height: calc(2 * 15.5em + 10px * 2);
+    margin-top: 10px;
 
 }
 
@@ -574,6 +576,11 @@ body {
     scroll-snap-align: start;
     margin-bottom: 5px;
 }
+
+.usrDesc{
+    margin: 0;
+}
+
 
 .topTodo {
     display: flex;
@@ -842,6 +849,13 @@ body {
     width: 100%;
     max-width: 100%;
     overflow-y: auto;
+}
+
+.user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .projectUsers {
