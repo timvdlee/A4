@@ -12,6 +12,16 @@
       src="https://kit.fontawesome.com/c2c6ce3227.js"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function navbar_redirect(selectElement){
+        const selectValue = selectElement.value;
+
+        if (selectValue) {
+          window.location.pathname = selectValue
+          selectElement.selectIndex = 0;
+        }
+      }
+    </script>
     <link
       rel="stylesheet"
       type="text/css"
@@ -26,17 +36,22 @@
     <div class="app">
       <div class="sidebar">
 
-        <a href="/">
+        <a href="/" class="sidebar-link">
           <p class="sidebar-text">Home</p>
         </a>
         <div class="sidebar-wrapper">
           <div class="top-links">
             <div class="dropdown" id="dropdownDiv">
               <i class="fa-solid fa-list-ul"></i>
-              <select class="navbar-buttons navbar-dropdown">
-                <option value="alle-projecten">
+              <select class="navbar-buttons navbar-dropdown" onchange="navbar_redirect(this)">
+                <option>
                   <span class="sidebar-span">Alle projecten</span>
                 </option>
+                {% for project in dropdown_navbar %}
+                  <option value="project/{{project.id}}">
+                    <span class="sidebar-span">{{project.name}}</span>
+                  </option>
+                {% endfor %}
               </select>
             </div>
             <a class="navbar-buttons" href="{% url 'project-toevoegen' %}">
