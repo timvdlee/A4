@@ -14,10 +14,8 @@ def login_view(request):
             login(request, user)
             return redirect("/")
         else:
-            messages = get_error_message(login_form)
             context = {
-            "login_form": login_form,
-            "messages": messages,
+                "login_form": login_form,
             }
             return render(request, "accounts/login.html", context)
     else:
@@ -37,12 +35,9 @@ def register_view(request):
             login(request, user)
             return redirect('/')
         else:
-            messages = get_error_message(register_form)
             context = {
-            "register_form": register_form,
-            "messages": messages,
+                "register_form": register_form,
             }
-            print(messages)
             return render(request, "accounts/registreer.html", context)
     else:
         register_form = UserCreationForm(request.POST or None)
