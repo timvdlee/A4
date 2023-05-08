@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
     creation_date = models.DateField(default=datetime.date.today)
     deadline_date = models.DateField(default=datetime.date.fromisoformat('2024-01-01'))
     admin_user = models.ForeignKey(User, on_delete=models.CASCADE)
