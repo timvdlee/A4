@@ -40,72 +40,90 @@ def add_to_recent(project, user, description):
     add_recent = Recent(user=user, project=project, date=date, time=time,
                         description=description)
     add_recent.save()
+    
+def project_name_edit(request,project):
+    add_to_recent(project, request.user, f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
+    new_name = request.POST.get("name")
+    if len(new_name) <= Project._meta.get_field('name').max_length:
+        project.name = new_name
+        project.save()
 
+def todo_toevoegen_submit(request,project):
+    todo_form = TodoForm(request.POST)
+    todo_form.completed = False
+    if todo_form.is_valid():
+        td_db_obj = todo_form.save(commit=False)
+        td_db_obj.project = project
+        td_db_obj.save()
+        add_to_recent(project, request.user,
+                        f"{request.user} heeft todo {td_db_obj.name} aangemaakt in project {project.name}")
+        
+def todo_update_submit(request,project):
+    todo = Todo.objects.get(id=request.POST.get("id"))
+    todo.name = request.POST.get("name")
+    todo.project = project
+    todo.deadline_date = request.POST.get("deadline_date")
+    todo.deadline_time = request.POST.get("deadline_time")
+    todo.completed = True if request.POST.get("completed") else False
+    todo.save()
+    add_to_recent(project, request.user, f"{request.user} heeft todo {todo.name} aangepast")
+    
+def addSubTodo_submit(request,project):
+    subTodoDesc = request.POST.get("subTodoDesc")
+    if len(subTodoDesc) > 0:
+        subtodo = SubTodo()
+        subtodo.todo = Todo.objects.get(id=request.POST.get("todoId"))
+        subtodo.description = subTodoDesc
+        subtodo.save()
+        add_to_recent(project, request.user,
+                        f"{request.user} heeft een subtodo aangemaakt in todo {subtodo.todo.name} van project {subtodo.todo.project.name}")
+
+def completeSubTodo_submit(request,project):
+    subtodo = SubTodo.objects.filter(id=request.POST.get("subTodoId"))
+    if len(subtodo) > 0:
+        add_to_recent(project, request.user,
+                      f"{request.user} heeft een subtodo afgerond van todo {subtodo[0].todo.name} uit project {subtodo[0].todo.project.name}")
+        subtodo[0].delete()
+        
+def reActivateTodo_submit(request,project):
+    todo = Todo.objects.get(id=request.POST.get("id"))
+    todo.completed = False
+    todo.save()
+    add_to_recent(project, request.user,
+                    f"{request.user} heeft todo {todo.name} van project {todo.project.name} opnieuw geactiveerd")
+    
+
+def project_add_user(request,project):
+    project = Project.objects.get(id=request.POST.get("project_id"))
+    user = User.objects.filter(username=request.POST.get("users"))
+    if len(user) > 0:
+        user = user[0]
+        project.members.add(user)
+        project.save()
+        add_to_recent(project, request.user,
+                    f"{request.user} heeft {user} toegevoegd aan project {project.name}")
+    else:
+        messages.error(request,"User does not exist")
 
 @login_required
 def project(request, pk=None):
     project = get_object_or_404(Project, pk=pk)
-
     if request.method == "POST":
-        if 'project-name-submit' in request.POST:  # project naam aanpassen
-            add_to_recent(project, request.user,
-                          f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
-            new_name = request.POST.get("name")
-            if len(new_name) <= Project._meta.get_field('name').max_length:
-                project.name = new_name
-                project.save()
-                
-        elif 'todo-toevoegen-submit' in request.POST:  # Nieuwe todo aanmaken
-            todo_form = TodoForm(request.POST)
-            todo_form.completed = False
-            if todo_form.is_valid():
-                td_db_obj = todo_form.save(commit=False)
-                td_db_obj.project = project
-                td_db_obj.save()
-                add_to_recent(project, request.user,
-                              f"{request.user} heeft todo {td_db_obj.name} aangemaakt in project {project.name}")
-        elif 'todo-update-submit' in request.POST:  # Todo aanpassen
-            todo = Todo.objects.get(id=request.POST.get("id"))
-            todo.name = request.POST.get("name")
-            todo.project = project
-            todo.deadline_date = request.POST.get("deadline_date")
-            todo.deadline_time = request.POST.get("deadline_time")
-            todo.completed = True if request.POST.get("completed") else False
-            todo.save()
-            add_to_recent(project, request.user,
-                          f"{request.user} heeft todo {todo.name} aangepast")
-        elif 'addSubTodo-submit' in request.POST:  # Subtodo aanmaken
-            subTodoDesc = request.POST.get("subTodoDesc")
-            if len(subTodoDesc) > 0:
-                subtodo = SubTodo()
-                subtodo.todo = Todo.objects.get(id=request.POST.get("todoId"))
-                subtodo.description = subTodoDesc
-                subtodo.save()
-                add_to_recent(project, request.user,
-                              f"{request.user} heeft een subtodo aangemaakt in todo {subtodo.todo.name} van project {subtodo.todo.project.name}")
-        elif 'completeSubTodo-submit' in request.POST:  # Subtodo verwijderen
-            subtodo = SubTodo.objects.filter(id=request.POST.get("subTodoId"))
-            if len(subtodo) > 0:
-                add_to_recent(project, request.user,
-                              f"{request.user} heeft een subtodo afgerond van todo {subtodo[0].todo.name} uit project {subtodo[0].todo.project.name}")
-                subtodo[0].delete()
-        elif 'reActivateTodo-submit' in request.POST:  # Todo's activeren
-            todo = Todo.objects.get(id=request.POST.get("id"))
-            todo.completed = False
-            todo.save()
-            add_to_recent(project, request.user,
-                          f"{request.user} heeft todo {todo.name} van project {todo.project.name} opnieuw geactiveerd")
-        elif 'project-add-user' in request.POST:
-            project = Project.objects.get(id=request.POST.get("project_id"))
-            user = User.objects.filter(username=request.POST.get("users"))
-            if len(user) > 0:
-                user = user[0]
-                project.members.add(user)
-                project.save()
-                add_to_recent(project, request.user,
-                            f"{request.user} heeft {user} toegevoegd aan project {project.name}")
-            else:
-                messages.error(request,"User does not exist")
+        match list(dict(request.POST).keys())[-1]:
+            case 'project-name-submit':
+                project_name_edit(request,project)
+            case 'todo-toevoegen-submit':
+                todo_toevoegen_submit(request,project)
+            case 'todo-update-submit':
+                todo_update_submit(request,project)
+            case 'addSubTodo-submit':
+                addSubTodo_submit(request,project)
+            case 'completeSubTodo-submit':
+                completeSubTodo_submit(request,project)
+            case 'reActivateTodo-submit':
+                reActivateTodo_submit(request,project)
+            case 'project-add-user':
+                project_add_user(request,project)
 
     project_users = [{"username": user.username,
                       "role": "Admin" if user == project.admin_user else "Gebruiker",
