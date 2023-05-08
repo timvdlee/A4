@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from .forms import ProjectForm, TodoForm
 from datetime import datetime
@@ -6,11 +6,8 @@ from .models import Project, User, Recent
 from django.contrib.auth import get_user_model
 import json
 from django.contrib.auth.decorators import login_required
-import uuid
-import random
-from datetime import datetime, timedelta
+from datetime import datetime 
 from .models import Todo, SubTodo
-from django.core.exceptions import ValidationError
 from django.contrib import messages 
 
 # Create your views here.
@@ -25,14 +22,6 @@ def home(request):
                       "projects": projects_with_user,
                       "feed": recent_with_user[:10],
                   })
-
-
-def random_deadline(start_date, end_date):
-    delta = end_date - start_date
-    random_days = random.randrange(delta.days)
-    random_time = random.randrange(24 * 3600)
-    return start_date + timedelta(days=random_days, seconds=random_time)
-
 
 def add_to_recent(project, user, description):
     date = datetime.now().date()
@@ -193,24 +182,27 @@ def project(request, pk=None):
                   )
 
 
+def project_toevoegen_post(request):
+    project_form_output = request.POST
+    form = ProjectForm(project_form_output)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.admin_user = request.user
+        obj.save()
+        usr_list = json.loads(request.POST.get('members'))
+        obj.members.add(request.user.id)
+        for x in usr_list:
+            obj.members.add(x)
+        obj.save()
+        add_to_recent(obj, request.user,
+                        f"{request.user} heeft project {obj.name} aangemaakt.")
+        return HttpResponseRedirect(f"/project/{obj.id}/")
+
 @login_required
 def project_toevoegen(request):
     project_toev_form = ProjectForm()
     if request.method == "POST":
-        project_form_output = request.POST
-        form = ProjectForm(project_form_output)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.admin_user = request.user
-            obj.save()
-            usr_list = json.loads(request.POST.get('members'))
-            obj.members.add(request.user.id)
-            for x in usr_list:
-                obj.members.add(x)
-            obj.save()
-            add_to_recent(obj, request.user,
-                          f"{request.user} heeft project {obj.name} aangemaakt.")
-            return HttpResponseRedirect(f"/project/{obj.id}/")
+       project_toevoegen_post(request)
 
     selectable_users = {i["username"]: i["id"] for i in
                         get_user_model().objects.filter(
