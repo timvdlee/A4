@@ -88,6 +88,19 @@
         </div>
         {% endblock app_header %}
         <div class="inner-app-body">
+          {% block messages %}
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-danger bg-danger border-2 text-white mx-3 animated flipInX delay-04s d-flex align-items-center" role="alert" style="font-size: 0.8rem; margin-top:10px; margin-bottom:10px">
+            <div class="flex-grow-1">
+                <i class="fas fa-exclamation-triangle opacity-05 mr-2"></i>
+                    {{ message }}
+                  </div>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          {% endfor %}
+        </div>
+          {% endif %}
+      {% endblock messages %}
           {% block content %}{% endblock content %}
         </div>
       </div>

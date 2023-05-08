@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 
 class ProjectForm(forms.ModelForm):
-    name = forms.CharField(required=False)
+    name = forms.CharField(required=True,max_length=Project._meta.get_field('name').max_length)
     deadline_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
         required=True

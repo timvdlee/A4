@@ -10,7 +10,8 @@ import uuid
 import random
 from datetime import datetime, timedelta
 from .models import Todo, SubTodo
-
+from django.core.exceptions import ValidationError
+from django.contrib import messages 
 
 # Create your views here.
 
@@ -49,8 +50,11 @@ def project(request, pk=None):
         if 'project-name-submit' in request.POST:  # project naam aanpassen
             add_to_recent(project, request.user,
                           f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
-            project.name = request.POST.get("name")
-            project.save()
+            new_name = request.POST.get("name")
+            if len(new_name) <= Project._meta.get_field('name').max_length:
+                project.name = new_name
+                project.save()
+                
         elif 'todo-toevoegen-submit' in request.POST:  # Nieuwe todo aanmaken
             todo_form = TodoForm(request.POST)
             todo_form.completed = False
@@ -93,12 +97,15 @@ def project(request, pk=None):
                           f"{request.user} heeft todo {todo.name} van project {todo.project.name} opnieuw geactiveerd")
         elif 'project-add-user' in request.POST:
             project = Project.objects.get(id=request.POST.get("project_id"))
-            user = User.objects.get(username=request.POST.get("users"))
-            # user_id = user.id
-            project.members.add(user)
-            project.save()
-            add_to_recent(project, request.user,
-                          f"{request.user} heeft {user} toegevoegd aan project {project.name}")
+            user = User.objects.filter(username=request.POST.get("users"))
+            if len(user) > 0:
+                user = user[0]
+                project.members.add(user)
+                project.save()
+                add_to_recent(project, request.user,
+                            f"{request.user} heeft {user} toegevoegd aan project {project.name}")
+            else:
+                messages.error(request,"User does not exist")
 
     project_users = [{"username": user.username,
                       "role": "Admin" if user == project.admin_user else "Gebruiker",

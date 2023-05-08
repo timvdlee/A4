@@ -335,7 +335,7 @@ body {
 
 .inner-app-body {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
     overflow: hidden;
 }
@@ -411,6 +411,8 @@ body {
     font-size: var(--secondary-font-size);
     margin: 0;
     font-weight: 600;
+    overflow: hi;
+    text-overflow: ellipsis;
 }
 
 
