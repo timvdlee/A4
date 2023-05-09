@@ -411,7 +411,7 @@ body {
     font-size: var(--secondary-font-size);
     margin: 0;
     font-weight: 600;
-    overflow: hi;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
