@@ -18,7 +18,7 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect('/')
     elif request.method == 'POST':
-        login_view_POST(request)
+        return login_view_POST(request)
     else:
         login_form = AuthenticationForm(request, data=request.POST)
         context = {
@@ -43,7 +43,7 @@ def register_view(request):
     if request.user.is_authenticated:
         return redirect('/')
     elif request.method == 'POST':
-        register_view_POST(request)
+        return register_view_POST(request)
     else:
         register_form = UserCreationForm(request.POST or None)
         context = {
