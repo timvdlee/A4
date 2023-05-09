@@ -1,4 +1,3 @@
-# tests/test_project_name_edit.py
 import pytest
 from django.contrib.auth.models import User
 from django.http import HttpRequest

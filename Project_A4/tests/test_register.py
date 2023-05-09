@@ -1,3 +1,6 @@
+"""
+Test geschreven voor register_view door Salah
+"""
 import pytest
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser, User

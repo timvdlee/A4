@@ -25,7 +25,7 @@ def factory():
     return RequestFactory()
 
 @pytest.mark.django_db
-def project_toevoegen_post_valid_form_redirect(create_test_user):
+def test_project_toevoegen_post_valid_form_redirect(create_test_user):
     test_user, project = create_test_user
     path = reverse("project-toevoegen")
     request = factory.post(path)
