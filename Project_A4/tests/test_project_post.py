@@ -59,3 +59,14 @@ def test_project_toevoegen_post_no_deadline_project_not_in_database(create_test_
     request.method = "POST"
     project_toevoegen_post(request)
     assert Project.objects.count() == 0
+
+@pytest.mark.django_db
+def test_project_toevoegen_post_name_too_long_project_not_in_database(create_test_user_and_project, test_make_user_project):
+    test_user = create_test_user_and_project
+    users = test_make_user_project
+    request = HttpRequest()
+    request.user = test_user
+    request.POST = {'members': json.dumps([user.id for user in users]), "name": "bghgukhjkbhjkhjkghfvghdfdfyjggndthfhghjdghfhjhfghfa", "deadline_date": ""}
+    request.method = "POST"
+    project_toevoegen_post(request)
+    assert Project.objects.count() == 0
