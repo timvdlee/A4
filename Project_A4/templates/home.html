@@ -11,6 +11,7 @@
                             <p class="project-number">#{{ project.id }}</p>
                             <p class="project-titel"> {{ project.name }}</p>
                             <p class="project-datum">Aangemaakt op: {{ project.creation_date }} </p>
+                            <p class="project-datum">Deadline date: {{ project.deadline_date }}</p>
                             <p class="gebruikers">Gebruikers:</p>
                             <ul class="lijst">
                                 {% for user in project.members.all %}
