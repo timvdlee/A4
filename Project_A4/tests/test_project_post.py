@@ -5,30 +5,57 @@ from unittest.mock import patch
 from ProjectApp.models import Project
 from ProjectApp.views import project_toevoegen_post
 from django.test import RequestFactory
+from ProjectApp.forms import ProjectForm
 from django.urls import reverse
-
-
+from datetime import datetime
+import json
 @pytest.fixture
-def create_test_user(db):
+def create_test_user_and_project(db):
     # Create a test user
     test_user = User.objects.create_user(username='testuser',
                                          password='testpassword')
 
     # Create a test project instance
-    project = Project.objects.create(name="Project Name", admin_user=test_user)
 
-    return test_user, project
-
+    return test_user
 
 @pytest.fixture
-def factory():
-    return RequestFactory()
+def test_make_user_project():
+    user1 = User.objects.create_user(username='testuser1', password='testpassword1')
+    user2 = User.objects.create_user(username='testuser2', password='testpassword2')
+    user3 = User.objects.create_user(username='testuser3', password='testpassword3')
+    return [user1, user2, user3]
 
 @pytest.mark.django_db
-def test_project_toevoegen_post_valid_form_redirect(create_test_user):
-    test_user, project = create_test_user
-    path = reverse("project-toevoegen")
-    request = factory.post(path)
-    request.project = project
-    response = project_toevoegen_post(request)
-    assert response.status_code == 302
+def test_project_toevoegen_post_valid_project_in_database(create_test_user_and_project, test_make_user_project):
+    test_user = create_test_user_and_project
+    users = test_make_user_project
+    request = HttpRequest()
+    request.user = test_user
+    request.POST = {'members': json.dumps([user.id for user in users]), "name": "TestProject", "deadline_date": datetime.now().date()}
+    request.method = "POST"
+    project_toevoegen_post(request)
+    assert Project.objects.last().name == "TestProject"
+
+@pytest.mark.django_db
+def test_project_toevoegen_post_no_name_project_not_in_database(create_test_user_and_project, test_make_user_project):
+    test_user = create_test_user_and_project
+    users = test_make_user_project
+    request = HttpRequest()
+    request.user = test_user
+    request.POST = {'members': json.dumps([user.id for user in users]), "name": "", "deadline_date": datetime.now().date()}
+    request.method = "POST"
+    project_toevoegen_post(request)
+    assert Project.objects.count() == 0
+
+
+@pytest.mark.django_db
+def test_project_toevoegen_post_no_deadline_project_not_in_database(create_test_user_and_project, test_make_user_project):
+    test_user = create_test_user_and_project
+    users = test_make_user_project
+    request = HttpRequest()
+    request.user = test_user
+    request.POST = {'members': json.dumps([user.id for user in users]), "name": "", "deadline_date": ""}
+    request.method = "POST"
+    project_toevoegen_post(request)
+    assert Project.objects.count() == 0
