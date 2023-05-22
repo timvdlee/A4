@@ -4,6 +4,13 @@ from django.contrib.auth import get_user_model
 
 
 class ProjectForm(forms.ModelForm):
+    """ProjectForm
+    
+    Het form waarmee gebruikers de informatie over het project kunnen aanpassen. 
+    Het enige wat aangepast kan worden is de naam. De deadline wordt automatisch door het script ingesteld. 
+    De maximale lengte van het veld wordt bepaald door de maximum lengte uit de models op te halen.
+
+    """
     name = forms.CharField(required=True,max_length=Project._meta.get_field('name').max_length)
     deadline_date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
@@ -17,8 +24,14 @@ class ProjectForm(forms.ModelForm):
 
 
 class TodoForm(forms.ModelForm):
+    """TodoForm
+    De form waarmee de todo aangemaakt of aangepast kan worden. 
+    Afhankelijk van wat de gebruiker wilt wordt deze form ingeladen met een bestaande todo. 
+
+    :param forms: _description_
+    """
     name = forms.CharField(
-        max_length=100,
+        max_length=Todo._meta.get_field('name').max_length,
         widget=forms.TextInput(),
         required=True
     )
