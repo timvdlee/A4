@@ -122,7 +122,7 @@ def addSubTodo_submit(request,project):
     :param project: current project
     """
     subTodoDesc = request.POST.get("subTodoDesc")
-    if len(subTodoDesc) > 0:
+    if len(subTodoDesc) > 0 and len(subTodoDesc) < SubTodo._meta.get_field("description").max_length:
         subtodo = SubTodo()
         subtodo.todo = Todo.objects.get(id=request.POST.get("todoId"))
         subtodo.description = subTodoDesc
