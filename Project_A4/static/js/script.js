@@ -1,9 +1,6 @@
 
 window.onload = function() {
 
-console.log("aa")
-console.log(users)
-
 let names = [];
 
 for (var key in users) {
@@ -15,7 +12,7 @@ console.log(names)
 autocomplete(document.getElementById("userInput"), names)
 }
 
-
+//Autocomplete function from W3schools
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
@@ -115,6 +112,10 @@ function autocomplete(inp, arr) {
 
 
   function toevoegen(){
+    /*
+    Deze functie zorgt ervoor dat de id's van de users opgeslagen worden in een hiddeninput field bij de projectcreation.
+    
+    */
     let user_input = document.getElementById("userInput")
     const hidden_usr = document.getElementById("hiddenUsers")
     const userDisplay = document.getElementById("userDisplay")
