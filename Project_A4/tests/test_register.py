@@ -7,19 +7,25 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.test import RequestFactory
 from mixer.backend.django import mixer
 from accounts.views import register_view
+from ProjectApp.views import home
 from django.test import Client
 
 
 """
 request factory maakt http-requests voor de test
 """
+
+
 @pytest.fixture
 def factory():
     return RequestFactory()
 
+
 """
 Maakt user object voor de test
 """
+
+
 @pytest.fixture
 def user():
     return mixer.blend(User)
@@ -31,40 +37,45 @@ De test roept dan register_view aan met de HttpRequest en controleert of
 de response statuscode gelijk is aan 302 (de redirect-statuscode) en of de 
 response-url gelijk is aan '/' (de homepage).
 """
+
+
 @pytest.mark.django_db
-def test_register_view_authenticated_user(factory, user):
-    path = reverse('register')
+def test_register_view_register_autenticated_user_returns_statuscode_url(factory, user):
+    path = reverse("register")
     request = factory.get(path)
     request.user = user
-
     response = register_view(request)
-    assert response.status_code == 302
-    assert response.url == '/'
+    expect_status_code = 302
+    actual_status_code = response.status_code
+    assert actual_status_code == expect_status_code
+    assert response.url == "/"
 
 
 """
 checkt of de POST-request wordt geaccepteerd en er een redirect plaatsvindt.
 """
+
+
 @pytest.mark.django_db
-def test_register_view_post(factory):
-    user = User.objects.create_user(username='testuser', password='testpass')
+def test_register_view_post_login_registered_user_returns_statuscode(factory):
+    user = User.objects.create_user(username="testuser", password="testpass")
     client = Client()
-    client.login(username='testuser', password='testpass')
-    path = reverse('register')
+    client.login(username="testuser", password="testpass")
+    path = reverse("register")
     request = factory.post(path)
     request.user = user
     response = register_view(request)
-    assert response.status_code == 302
+    expect_status_code = 302
+    actual_status_code = response.status_code
+    assert actual_status_code == expect_status_code
 
-"""
-de HTTP-request (in dit geval de GET-request naar de register_view) succesvol is geweest
-en dat er een HTTP-response is teruggegeven die in dit geval een statuscode van 200 heeft.
-"""
 @pytest.mark.django_db
-def test_register_view_unauthenticated_user(factory):
-    path = reverse('register')
+def test_home_view_unauthenticated_user_redirects_to_login(factory):
+    path = reverse("home")
     request = factory.get(path)
     request.user = AnonymousUser()
-    response = register_view(request)
-    assert response.status_code == 200
-
+    response = home(request)
+    expect_status_code = 302
+    actual_status_code = response.status_code
+    assert actual_status_code == expect_status_code
+    assert response.url == reverse("login")
