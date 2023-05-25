@@ -16,7 +16,7 @@ def test_make_user_project_todo(db):
                                project=project)
     return test_user, project, todo
 
-def test_addSubTodo_submit_creates_subtodo_when_valid_description(test_make_user_project_todo):
+def test_addSubTodo_submit_valid_subtodo_add_to_database(test_make_user_project_todo):
     test_user, project, todo = test_make_user_project_todo
     subtodo_len_before = SubTodo.objects.count()
     request = HttpRequest()
@@ -32,7 +32,7 @@ def test_addSubTodo_submit_creates_subtodo_when_valid_description(test_make_user
     assert subtodo_len_after == subtodo_len_before + 1
 
 
-def test_addSubTodo_submit_does_not_create_subtodo_when_empty_description(test_make_user_project_todo):
+def test_addSubTodo_submit_empty_subtodo_dont_add_to_database(test_make_user_project_todo):
     test_user, project, todo = test_make_user_project_todo
     request = HttpRequest()
     request.user = test_user
@@ -44,7 +44,7 @@ def test_addSubTodo_submit_does_not_create_subtodo_when_empty_description(test_m
     assert subtodo_len_after == subtodo_len_before
 
 
-def test_addSubTodo_submit_does_not_create_subtodo_when_description_exceeds_limit(test_make_user_project_todo):
+def test_addSubTodo_submit_to_long_description_dont_add_to_database(test_make_user_project_todo):
     test_user, project, todo = test_make_user_project_todo
     request = HttpRequest()
     request.user = test_user
