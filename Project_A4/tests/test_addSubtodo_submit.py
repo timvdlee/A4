@@ -25,9 +25,6 @@ def test_addSubTodo_submit_valid_subtodo_add_to_database(test_make_user_project_
                     'todoId': project.id}
     addSubTodo_submit(request, project)
     subtodo = SubTodo.objects.filter(todo=todo).last()
-    add_to_recent(project,
-                  request.user,
-                  f"{request.user} heeft een subtodo aangemaakt in todo {subtodo.todo.name} van project {subtodo.todo.project.name}")
     subtodo_len_after = SubTodo.objects.count()
     assert subtodo_len_after == subtodo_len_before + 1
 
