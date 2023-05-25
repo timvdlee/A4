@@ -33,7 +33,7 @@ urlpatterns = [
     path('project/<int:pk>/', project, name='project'),
     path('project-toevoegen', project_toevoegen, name='project-toevoegen'),
     path("login/", login_view),
-    path("registreer/", register_view),
+    path("registreer/", register_view, name='register'),
     path("logout/", logout_view),
 
 ]

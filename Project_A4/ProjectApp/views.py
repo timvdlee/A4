@@ -63,7 +63,7 @@ def project_name_edit(request,project):
     :param project: current project
     """
     new_name = request.POST.get("name")
-    if len(new_name) <= Project._meta.get_field('name').max_length:
+    if len(new_name) > 0 and len(new_name) <= Project._meta.get_field('name').max_length:
         add_to_recent(project, request.user, f"{request.user} heeft project {project.name} aangepast naar {request.POST.get('name')}")
         project.name = new_name
         project.save()
