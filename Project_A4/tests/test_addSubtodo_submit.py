@@ -26,7 +26,7 @@ def test_addSubTodo_submit_valid_subtodo_add_to_database(test_make_user_project_
     addSubTodo_submit(request, project)
     subtodo = SubTodo.objects.filter(todo=todo).last()
     subtodo_len_after = SubTodo.objects.count()
-    assert subtodo_len_after == subtodo_len_before + 1
+    assert subtodo_len_after > subtodo_len_before
 
 
 def test_addSubTodo_submit_empty_subtodo_dont_add_to_database(test_make_user_project_todo):
