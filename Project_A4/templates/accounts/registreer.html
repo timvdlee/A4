@@ -1,0 +1,46 @@
+{% load widget_tweaks %}
+{% load static %}
+
+{% block head %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+<link rel="stylesheet" href="{% static '/css/login_register.css' %}">
+<script src="https://kit.fontawesome.com/c2c6ce3227.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+{% endblock head %}
+
+{% block content %}
+{% if not request.user.is_authenticated %}
+    {% if request.method == "POST" %}
+        {% for field in register_form %}
+            {% if field.errors %}
+                <div class="alert alert-danger bg-danger border-2 text-white mx-3 animated flipInX delay-04s d-flex align-items-center" role="alert" style="font-size: 0.8rem; margin-top:10px; margin-bottom:10px">
+                    <div class="flex-grow-1">
+                        <i class="fas fa-exclamation-triangle opacity-05 mr-2"></i>
+                        {% for error in field.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="hcontainer">
+        <div class="form-container sign-in-container" style="height: 400px!important;">
+            <form action="" method="POST">{% csrf_token %}
+                <p class="register-text">REGISTREER</p>
+                <div class="spacer">
+                    {{register_form.username|attr:"placeholder:Gebruikersnaam"}}<br>
+                    {{register_form.password1|attr:"placeholder:Wachtwoord"}}<br>
+                    {{register_form.password2|attr:"placeholder:Herhaal wachtwoord"}}
+                </div>
+                <button type="submit" name="login_form" class="buton">Registreer</button>
+                <p>Log <a href="/login/">hier!</a> in!</p>
+            </form>
+        </div>
+    </div>
+
+{% endif %}
+{% endblock content %}
+

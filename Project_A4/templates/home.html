@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block content %}
+<div class="home">
+    <div class="horizontal-align">
+        <div class="project-lijst-wrapper">
+            <div class="project-lijst">
+                {% for project in projects %}
+                <a class="styling_projectdiv"
+                   href="{% url 'project' project.id %}">
+                    <div class="project-element">
+                        <div class="project-top">
+                            <p class="project-number">#{{ project.id }}</p>
+                            <p class="project-titel"> {{ project.name }}</p>
+                            <p class="project-datum">Aangemaakt op: {{ project.creation_date }} </p>
+                            <p class="gebruikers">Gebruikers:</p>
+                            <ul class="lijst">
+                                {% for user in project.members.all %}
+                                <li class="lijst-element">{{ user.username }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="project-bottom">
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+          <a href="{% url 'project-toevoegen' %}" class="url-toevoegen">
+
+                <div class="project-element toevoegen">
+                    <div class="project-top">
+                        <p class="project-number">#</p>
+                        <p class="project-titel">Project XX</p>
+                        <p class="project-maken">Maak project</p>
+                    </div>
+                </div>
+
+          </a>
+            </div>
+        </div>
+    </div>
+    <div class="feed">
+        <div class="feed-inner">
+            <p class="feed-titel">Recente activiteiten:</p>
+            <ul class="feed-lijst">
+                {% for element in feed %}
+                <li class="lijst-element-feed">
+                    {{element.description}}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
