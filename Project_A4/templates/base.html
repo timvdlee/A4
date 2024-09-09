@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/c2c6ce3227.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function navbar_redirect(selectElement){
+        const selectValue = selectElement.value;
+
+        if (selectValue) {
+          window.location.pathname = selectValue
+          selectElement.selectIndex = 0;
+        }
+      }
+    </script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    {% block head %}
+    {% endblock head %}
+    {% block extra_css %}
+    {% endblock extra_css %} 
+  </head>
+  <body>
+    <div class="app">
+      <div class="sidebar">
+
+        <a href="/" class="sidebar-link">
+          <p class="sidebar-text">Home</p>
+        </a>
+        <div class="sidebar-wrapper">
+          <div class="top-links">
+            <div class="dropdown" id="dropdownDiv">
+              <i class="fa-solid fa-list-ul"></i>
+              <select class="navbar-buttons navbar-dropdown" onchange="navbar_redirect(this)">
+                <option>
+                  <span class="sidebar-span">Alle projecten</span>
+                </option>
+                {% for project in dropdown_navbar %}
+                  <option value="project/{{project.id}}">
+                    <span class="sidebar-span">{{project.name}}</span>
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <a class="navbar-buttons" href="{% url 'project-toevoegen' %}">
+              <i class="fa-solid fa-plus"></i>
+              <span class="sidebar-span">Nieuw project</span>
+            </a>
+          </div>
+          <div class="bottom-links">
+            <div class="user-icon">
+              <div class="user-box">
+                <p class="botton-text">{{user}}</p>
+                <a class="botton-text" href="/logout" style="color: white; font-style: italic">
+                    Log out
+                </a>
+              </div>
+              <div class="user-logo">
+                <i class="fa-brands fa-github-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="app-body">
+        {% block app_header %}
+        <div class="header">
+          <div class="header-left">
+            <form method="post" style="margin-bottom: 20px">
+              {% csrf_token %}
+              <p class="header-text" name="title">
+                {{title|default:"Homepage"|title}}
+              </p>
+            </form>
+          </div>
+        </div>
+        {% endblock app_header %}
+        <div class="inner-app-body">
+          {% block messages %}
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-danger bg-danger border-2 text-white mx-3 animated flipInX delay-04s d-flex align-items-center" role="alert" style="font-size: 0.8rem; margin-top:10px; margin-bottom:10px">
+            <div class="flex-grow-1">
+                <i class="fas fa-exclamation-triangle opacity-05 mr-2"></i>
+                    {{ message }}
+                  </div>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          {% endfor %}
+        </div>
+          {% endif %}
+      {% endblock messages %}
+          {% block content %}{% endblock content %}
+        </div>
+      </div>
+    </div>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block head %}
+    <script type="text/javascript"> 
+        let users = {{selectable_users | safe}};
+    </script>
+  
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock head %}
+
+{% block content %}
+<div class="projectContent">
+    {% block app_header %}{% endblock app_header %}
+    <div class="projectHeader">
+        <div class="projectTitle">
+            <p type="text" class="project_title_text" name="title" value="project">{{ project_naam }}</p>
+            <button class="nameEditBtn" type="button" data-bs-toggle="modal" data-bs-target="#project-name" data-bs-whatever="@mdo">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+        </div>
+        <button class="addTodoButton" type="button" data-bs-toggle="modal" data-bs-target="#todo-toevoegen" data-bs-whatever="@mdo">Add Todo</button>
+    </div>
+    
+    <div class='todoWrapper'>
+    
+        {% for todo in todo_form %}
+    
+        <div class="todo">
+            <div class="topTodo">
+                <div class="desc">
+                    <p class="todoTitle" title='{{todo.todo.name}}'>Todo: {{todo.todo.name}}</p>
+                    <p class="todoDeadline">Deadline: {{todo.todo.deadline_time}} {{todo.todo.deadline_date}}</p>
+                </div>
+                <div class="editBtnWrapper">
+                    <button class="todoEditBtn" type="button" data-bs-toggle="modal" data-bs-target="#{{todo.todo.id}}" data-bs-whatever="@mdo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="" fill="currentColor" class="bi bi-three-dots todoDots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </button>
+                    {% comment %} Edit button goes here {% endcomment %}
+                </div>
+            </div>
+            <div class="bottomTodo">
+                <form action={% url 'project' pk=project_obj.pk %} method="post">
+                    {% csrf_token %}
+                    <div class="createSubTodo">
+                        <input type="hidden" name="todoId" value={{todo.todo.id}}>
+                        <input type="text" name="subTodoDesc" class="addSubTodo" id="createTodo" value="" placeholder="To do">
+                        <button class="btn btn-primary addTodoBtn" name="addSubTodo-submit" type="submit">Add</button>
+                    </div>
+                </form>
+                {% for subTodo in todo.todo.subtodos %}
+                <form action={% url 'project' pk=project_obj.pk %} method="post">
+                    {% csrf_token %}
+                    <div class="subTodo">
+                        <input readonly type="text" name="createTodo" class="addSubTodo" id="createTodo" value="{{subTodo.description}}" title="{{subTodo.description}}">
+                        <input type="hidden" name="subTodoId" value={{subTodo.id}}>
+                        <button class="btn btn-success addTodoBtn" name="completeSubTodo-submit" type="submit">✓</button>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="modal fade" id="{{todo.todo.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Wijzig Todo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post">
+                  {% csrf_token %}
+                  <p class="col-form-label fw-bold fs-5"> Todo info</p>
+                  <div class="form-group mb-2">
+                      <label for="recipient-name" class="col-form-label">Naam Todo:</label>
+                      {% render_field todo.form.name class="form-control" placeholder="Project Todo" %}
+                  </div>
+                  <p class="col-form-label fw-bold fs-5"> Deadline info</p>
+                  <div class="form-group mb-2">
+                      <label for="recipient-name" class="col-form-label">Deadline datum :</label>
+                      {% render_field todo.form.deadline_date class="form-control" placeholder="Project naam" %}
+                  </div>
+                  <div class="form-group mb-2">
+                      <label for="recipient-name" class="col-form-label">Deadline tijd :</label>
+                      {% render_field todo.form.deadline_time class="form-control" placeholder="Project naam" %}
+                  </div>
+                  <p class="col-form-label fw-bold fs-5"> Todo status</p>
+                  <div class="form-group mb-2">
+                      <div class="form-check">
+                          {% render_field todo.form.completed class="form-check-input"%}
+                          <label > Afgerond</label>
+                      </div>
+                  </div>
+                  <input type="hidden" name="id" value={{todo.todo.id}}>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-danger modalBtn ms-2" name="todo-update-submit">Update</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="modal fade" id="add_user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Voeg een gebruiker toe</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post">
+              {% csrf_token %}
+              <div class="d-flex">
+                <input class="pa_user_input" id="userInput" type="text" name="users" placeholder="Gebruikers">
+                <input type="hidden" name="project_id" value="{{project_obj.id}}">
+                <button type="submit" class="btn btn-danger modalBtn ms-2" name="project-add-user">Toevoegen</button>
+              </div>
+              <div class="modal-footer">
+                {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button> {% endcomment %}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pageBottom">
+        <div class="projectUsers">
+            <div class="userHeader">
+                <p class="finishedTodoText">Gebruikers</p>
+                <button class="addTodoButton" type="button" data-bs-toggle="modal" data-bs-target="#add_user" data-bs-whatever="@mdo" style="width: auto;">Add gebruiker</button>
+            </div>
+            <div class="users">
+                {% for user in project_users  %}
+                    <div class="user">
+                        <div class="user-logo">
+                            <i class="fa-brands fa-github-alt"></i>
+                        </div>
+                        <p class="usrDesc">Naam: {{user.username}}</p>
+                        <p class="usrDesc">Rol: {{user.role}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            
+
+        </div>
+        <div class="finishedTodoWrapper">
+            <p class="finishedTodoText">Finished Todos</p>
+            <div class="finishedTodo">
+                {% for f_todo in finished_todos %}
+                    <form class="finTodoForm" action={% url 'project' pk=project_obj.pk %} method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value={{f_todo.id}}>
+                        •    <button type="submit" name="reActivateTodo-submit" class="fin_todoBtn">{{f_todo.name}}</button>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="project-name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Wijzig project naam</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="d-flex">
+              {% render_field project_name_form.name class="form-control" placeholder="Project naam" %}
+              <button type="submit" class="btn btn-danger modalBtn ms-2" name="project-name-submit">Opslaan</button>
+            </div>
+            <div class="modal-footer">
+              {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button> {% endcomment %}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+ 
+  <div class="modal fade" id="todo-toevoegen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Todo maken</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <p class="col-form-label fw-bold fs-5"> Todo info</p>
+            <div class="form-group mb-2">
+                <label for="recipient-name" class="col-form-label">Naam Todo:</label>
+                {% render_field add_todo.name class="form-control" placeholder="Project Todo" %}
+            </div>
+            <p class="col-form-label fw-bold fs-5"> Deadline info</p>
+            <div class="form-group mb-2">
+                <label for="recipient-name" class="col-form-label">Deadline datum :</label>
+                {% render_field add_todo.deadline_date class="form-control" placeholder="Project naam" %}
+            </div>
+            <div class="form-group mb-2">
+                <label for="recipient-name" class="col-form-label">Deadline tijd :</label>
+                {% render_field add_todo.deadline_time class="form-control" placeholder="Project naam" %}
+            </div>
+            {% comment %} <p class="col-form-label fw-bold fs-5"> Todo status</p>
+            <div class="form-group mb-2">
+                <div class="form-check">
+                    {% render_field add_todo.completed class="form-check-input"%}
+                    <label > Afgerond</label>
+                </div>
+            </div>             {% endcomment %}
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger modalBtn ms-2" name="todo-toevoegen-submit">Opslaan</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+{% endblock content %}

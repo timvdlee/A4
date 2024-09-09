@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from ProjectApp.views import (
+    home,
+    project,
+    project_toevoegen
+)
+from accounts.views import (
+    login_view,
+    logout_view,
+    register_view,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home, name='homepage'),
+    path('project/<int:pk>/', project, name='project'),
+    path('project-toevoegen', project_toevoegen, name='project-toevoegen'),
+    path("login/", login_view),
+    path("registreer/", register_view, name='register'),
+    path("logout/", logout_view),
+
 ]
